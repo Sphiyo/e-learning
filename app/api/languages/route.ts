@@ -1,6 +1,7 @@
 import { Languages } from "next/dist/lib/metadata/types/alternative-urls-types";
 import { NextRequest, NextResponse } from "next/server";
 
+
 export interface BodyType {
     language: {
         iso: string;
@@ -59,6 +60,15 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
+    let Found = false;
+    for (const language of data.language){
+        if ( language.iso == body.iso ){
+            Found = true;
+        } 
+    }
+    if( Found ){
+        return NextResponse.json({message: "Post Failed: Already in"});
+    }
     const newLanguage = {
         "iso": body["iso"],
         "name": body["name"],
@@ -69,16 +79,16 @@ export async function POST(req: NextRequest) {
     }
     data.language.push(newLanguage);
     
-    return NextResponse.json({message: "Success"});
+    return NextResponse.json({message: "Post Success"});
 }
 
 
 
 export async function DELETE(req: NextRequest) {
-    const body : {iso: string} = await req.json();
-    data.language = data.language.filter( lang=> lang.iso != body.iso );
+    const {iso}: {iso: string} = await req.json();
+    data.language = data.language.filter( lang=> lang.iso != iso );
     
-    return NextResponse.json(data);
+    return NextResponse.json({message: "Delete Success"});
 }
 export async function PUT(req: NextRequest) {
     const body = await req.json();
@@ -95,5 +105,5 @@ export async function PUT(req: NextRequest) {
         }
         return lang;
     })
-    return NextResponse.json({message: "Success"});
+    return NextResponse.json({message: "Put Success"});
 }
