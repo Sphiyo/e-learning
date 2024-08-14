@@ -1,7 +1,7 @@
 "use client";
 import CustomModal from "@/app/components/custom-modal";
 import Link from "next/link";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 import $ from "jquery";
 
 
@@ -78,7 +78,12 @@ export async function openAddModal(){
 }
 
 
-export default function Add(){
+export default function Add(props: any){
+
+    const [showAdd, setShowAdd] = useState(false);
+    const handleAddClose = () => setShowAdd(false);
+    const handleAddShow = () => setShowAdd(true);
+
     return (
     <>
         <Link href="#" onClick={openAddModal}>Add Language</Link>

@@ -1,23 +1,19 @@
 "use client";
 import { BodyType, BodyTypeAll } from "@/app/api/languages/route";
+import BSModal from "@/app/components/BSModal";
 import CustomModal from "@/app/components/custom-modal";
 import $ from "jquery";
 import { MouseEvent } from "react";
 
 
 
-function InitEditModal(){
+function InitEditModal( props: any ){
     return (
-        <CustomModal 
-            id="edit-modal" 
-            title="Edit Language" 
-            btnTitle="Edit" 
-            onSuccess={(e)=>{
-                editSend(e);                
-                setTimeout(()=>(window.location.reload()), 500);
-                // closeEditModal();
-            }
-        }
+        <BSModal 
+            title="Delete Language" 
+            btnTitle="Delete" 
+            show={props.showEdit} 
+            handleClose={props.handleEditClose}
         >
             <form action="#">
                 <div className="modal-body">
@@ -31,7 +27,7 @@ function InitEditModal(){
                     <input type="checkbox" id="edit-modal-published" name="edit-modal-published" /><br />
                 </div> 
             </form>
-        </CustomModal>
+        </BSModal>
     );
 }
 async function getLanguage(iso: string) : Promise<BodyType>{
@@ -50,7 +46,7 @@ async function editSend(event: MouseEvent){
     const name = $(`#edit-modal-name`).val();
     const flag = $(`#edit-modal-flag`).val();
     const published = $(`#edit-modal-published`).is(':checked');
-    console.log(published);
+    
     const modifiedDate = new Date();
     
     const day = modifiedDate.getDate();
@@ -80,37 +76,27 @@ async function editSend(event: MouseEvent){
 }
 
 export async function openEditModal(id: string){
-    const isoInput = $(`#edit-modal-iso`);
-    const nameInput = $(`#edit-modal-name`);
-    const flagInput = $(`#edit-modal-flag`);
-    const publishedInput = $(`#edit-modal-published`);
+    const isoInput = document.getElementById("edit-modal-iso");
+    const nameInput = document.getElementById(`edit-modal-name`);
+    const flagInput = document.getElementById(`edit-modal-flag`);
+    const publishedInput = document.getElementById(`edit-modal-published`);
 
     const language = (await getLanguage(id)).language;
     
-    isoInput.prop("value", language.iso);
-    nameInput.prop("value", language.name);
-    flagInput.prop("value", language.flag);
-    publishedInput.prop("checked", language.published);
-
-    const {Modal} = require("bootstrap");
-    let modal = new Modal($("#edit-modal"));
-    modal.show();
-
+    isoInput?.setAttribute("value", language.iso);
+    nameInput?.setAttribute("value", language.name);
+    flagInput?.setAttribute("value", language.flag);
+    publishedInput?.setAttribute("checked", language.published? "true": "false");
+    console.log();
 }
 
-function closeEditModal() {    
 
-    const {Modal} = require("bootstrap");
-    let modal = new Modal($("#edit-modal"));
-    modal.hide();
-    
-}
 
-export default function Edit() {
+export default function Edit(props: any) {
     
     return (
         <>
-            <InitEditModal /> 
+            <InitEditModal showEdit={props.showEdit} handleEditClose={props.handleEditClose} /> 
             {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
         </>
     );

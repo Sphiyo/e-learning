@@ -1,9 +1,12 @@
 "use client";
 
 import { BodyType } from "@/app/api/languages/route";
+import BSModal from "@/app/components/BSModal";
 import CustomModal, { hideModal } from "@/app/components/custom-modal";
 import $ from "jquery";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "react-bootstrap";
 
 async function getLanguage(iso: string) : Promise<BodyType>{
     const response = await fetch(
@@ -28,15 +31,7 @@ export async function openDeleteModal(id: string){
     flagInput.prop("value", language.flag);
     publishedInput.prop("checked", language.published);
     console.log(language);
-    const {Modal} = require("bootstrap");
-    let modal = new Modal($("#delete-modal"));
-    modal.show();
 }
-export function closeDeleteModal(){    
-    const {Modal} = require("bootstrap");
-    let modal = new Modal($("#delete-modal"));
-    modal.hide();
-  }
   
 
 async function deleteSend(){
@@ -50,17 +45,15 @@ async function deleteSend(){
     }); 
     
 }
-function InitDeleteModal(){
+function InitDeleteModal(props: any){
+
     return (
-        <CustomModal 
-            id="delete-modal" 
+    <> 
+        <BSModal 
             title="Delete Language" 
             btnTitle="Delete" 
-            onSuccess={(e)=>{ 
-                deleteSend();
-                setTimeout(()=>(window.location.reload()), 500);
-                }
-            }> 
+            show={props.showDelete} 
+            handleClose={props.handleDeleteClose}>
             <form action="#">
                 <div className="modal-body">
                     <label htmlFor="delete-modal-iso"> ISO </label> <br />
@@ -73,16 +66,17 @@ function InitDeleteModal(){
                     <input type="checkbox" id="delete-modal-published" name="delete-modal-published" readOnly /><br />
                 </div> 
             </form>
-        </CustomModal>
+        </BSModal>
+    </>
     );
 }
 
 
-export default function Delete() {
+export default function Delete(props: any) {
     
     return (
         <>
-            <InitDeleteModal /> 
+            <InitDeleteModal showDelete={props.showDelete} handleDeleteClose={props.handleDeleteClose} /> 
         </>
     );
 }

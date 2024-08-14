@@ -1,6 +1,6 @@
 import Add from "./components/add";
-import Delete from "./components/delete";
-import Edit from "./components/edit";
+// import Delete from "./components/delete";
+// import Edit from "./components/edit";
 import List from "./components/list";
 
 
@@ -14,12 +14,15 @@ export default async function LanguagePage(){
         }
     );
     let languages = await response.json();
+
+
+
     return (
         <>
             <Add />
-            <List languages={languages.language} /> 
-            <Edit />
-            <Delete />
+            <List 
+                languages={languages.language} 
+            /> 
         </>
     );
 }
