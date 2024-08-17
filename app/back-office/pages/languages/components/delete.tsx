@@ -46,7 +46,7 @@ async function deleteSend(){
     
 }
 function InitDeleteModal(props: any){
-
+    console.log(props)
     return (
     <> 
         <BSModal 

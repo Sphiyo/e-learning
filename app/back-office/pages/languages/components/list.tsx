@@ -1,12 +1,10 @@
 "use client";
-import { BodyTypeAll } from "@/app/api/languages/route";
-import Link from "next/link";
-import Edit, { openEditModal } from "./edit";
-import Delete, { openDeleteModal } from "./delete";
-import { Button } from "react-bootstrap";
-import { useState } from "react";
+import Edit from "./edit";
+import Delete from "./delete";
+import {Button} from "react-bootstrap";
+import {useState} from "react";
 
-export interface Context {
+/*export interface Context {
     languages: {
         iso: string;
         name: string;
@@ -15,14 +13,14 @@ export interface Context {
         createdDate: string;
         modifiedDate: string;       
     }[];
-    // showEdit: any;
-    // handleEditShow: any;
-    // showDelete: any;
-    // handleDeleteShow: any; 
-}
+
+}*/
 
 export default function List(props: Context) {
-    
+
+    const [language, setLanguage] = useState('');
+
+
     const [showEdit, setShowEdit] = useState(false);
     const handleEditClose = () => setShowEdit(false);
     const handleEditShow = () => setShowEdit(true);
@@ -33,7 +31,7 @@ export default function List(props: Context) {
 
     return (
         <>
-            {showEdit && <Edit showEdit={showEdit} handleEditClose={handleEditClose} />}
+            {showEdit && <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} />}
             {showDelete && <Delete showDelete={showDelete} handleDeleteClose={handleDeleteClose} />}
 
             <table className="table table-secondary">
@@ -60,23 +58,17 @@ export default function List(props: Context) {
                                     title="published" 
                                     type="checkbox" 
                                     checked={language.published? true:false} 
-                                    disabled 
+                                    readOnly={true}
                                 />
                             </td>
                             <td>{language.createdDate}</td>
                             <td>{language.modifiedDate}</td>
-                            <td> 
-                                <Button variant="primary" onClick={()=>{
-                                        openEditModal(language.iso);
-                                        handleEditShow();
-                                    }
-                                }>
+                            <td>
+                                <Button variant="primary" onClick={()=> {setLanguage(language); setShowEdit(true)}}>
                                     Edit
                                 </Button>
                                 {" "}
-                                <Button variant="primary" onClick={()=>{
-                                        openDeleteModal(language.iso);
-                                        handleDeleteShow();
+                                <Button variant="primary" onClick={()=>{ setLanguage(language); setShowDelete(true);
                                     }
                                 }>
                                     Delete

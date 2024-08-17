@@ -1,46 +1,48 @@
 "use client";
-import { BodyType, BodyTypeAll } from "@/app/api/languages/route";
 import BSModal from "@/app/components/BSModal";
-import CustomModal from "@/app/components/custom-modal";
 import $ from "jquery";
 import { MouseEvent } from "react";
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
 
 
 function InitEditModal( props: any ){
+    console.log(props)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
     return (
-        <BSModal 
-            title="Delete Language" 
-            btnTitle="Delete" 
-            show={props.showEdit} 
-            handleClose={props.handleEditClose}
-        >
+        <Modal show={props.showEdit} onHide={props.handleEditClose}>
             <form action="#">
-                <div className="modal-body">
+
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Language</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
                     <label htmlFor="edit-modal-iso"> ISO </label> <br />
-                    <input type="text" id="edit-modal-iso" name="edit-modal-iso" readOnly required /><br />
+                    <input type="text" id="edit-modal-iso" readOnly={true} name="edit-modal-iso" defaultValue={props.language.iso} required /><br />
                     <label htmlFor="edit-modal-name"> Name </label> <br />
-                    <input type="text" id="edit-modal-name" name="edit-modal-name" required /><br />
+                    <input type="text" id="edit-modal-name" name="edit-modal-name" defaultValue={props.language.name} required /><br />
                     <label htmlFor="edit-modal-flag"> Flag </label> <br />
-                    <input type="text" id="edit-modal-flag" name="edit-modal-flag" required /><br />
+                    <input type="text" id="edit-modal-flag" name="edit-modal-flag" defaultValue={props.language.flag} required /><br />
                     <label htmlFor="edit-modal-published"> Published </label> <br />
-                    <input type="checkbox" id="edit-modal-published" name="edit-modal-published" /><br />
-                </div> 
+                    <input type="checkbox" id="edit-modal-published" name="edit-modal-published" defaultValue={props.language.published} /><br />
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button onClick={()=> editSend()} variant="primary">Save changes</Button>
+                </Modal.Footer>
+
+
             </form>
-        </BSModal>
+        </Modal>
     );
 }
-async function getLanguage(iso: string) : Promise<BodyType>{
-    const response = await fetch(
-        `http://localhost:3000/api/languages/?iso=${iso}`, {
-            method: "GET",
-            cache: 'no-store'
-        }
-    );
-    return response.json();
-}
-
-
 async function editSend(event: MouseEvent){
     const iso = $(`#edit-modal-iso`).val();
     const name = $(`#edit-modal-name`).val();
@@ -75,29 +77,10 @@ async function editSend(event: MouseEvent){
     
 }
 
-export async function openEditModal(id: string){
-    const isoInput = document.getElementById("edit-modal-iso");
-    const nameInput = document.getElementById(`edit-modal-name`);
-    const flagInput = document.getElementById(`edit-modal-flag`);
-    const publishedInput = document.getElementById(`edit-modal-published`);
-
-    const language = (await getLanguage(id)).language;
-    
-    isoInput?.setAttribute("value", language.iso);
-    nameInput?.setAttribute("value", language.name);
-    flagInput?.setAttribute("value", language.flag);
-    publishedInput?.setAttribute("checked", language.published? "true": "false");
-    console.log();
-}
-
-
-
 export default function Edit(props: any) {
-    
     return (
         <>
-            <InitEditModal showEdit={props.showEdit} handleEditClose={props.handleEditClose} /> 
-            {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
+            <InitEditModal showEdit={props.showEdit} language={props.language}  handleEditClose={props.handleEditClose} />
         </>
     );
 }
