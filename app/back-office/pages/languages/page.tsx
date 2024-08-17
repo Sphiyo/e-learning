@@ -1,9 +1,5 @@
 import Add from "./components/add";
-// import Delete from "./components/delete";
-// import Edit from "./components/edit";
 import List from "./components/list";
-
-
 
 
 export default async function LanguagePage(){
@@ -13,7 +9,7 @@ export default async function LanguagePage(){
             cache: 'no-store',
         }
     );
-    let languages = await response.json();
+    let languages = (await response.json()).languages;
 
 
 
@@ -21,7 +17,7 @@ export default async function LanguagePage(){
         <>
             <Add />
             <List 
-                languages={languages.language} 
+                languages={languages} 
             /> 
         </>
     );

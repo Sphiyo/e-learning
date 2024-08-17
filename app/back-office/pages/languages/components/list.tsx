@@ -4,7 +4,7 @@ import Delete from "./delete";
 import {Button} from "react-bootstrap";
 import {useState} from "react";
 
-/*export interface Context {
+ interface Context {
     languages: {
         iso: string;
         name: string;
@@ -14,7 +14,7 @@ import {useState} from "react";
         modifiedDate: string;       
     }[];
 
-}*/
+}
 
 export default function List(props: Context) {
 
@@ -34,16 +34,16 @@ export default function List(props: Context) {
             <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} />
             <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} />
 
-            <table className="table table-secondary">
+            <table className="table table-secondary text-center">
                 <thead className="table-dark">
                     <tr>
-                        <th>ISO</th>
-                        <th>Name</th>
-                        <th>Flag</th>
-                        <th>Published</th>
-                        <th>Date Added</th>
-                        <th>Date Updated</th>
-                        <th>Actions</th>
+                        <th className="col-1">ISO</th>
+                        <th className="col-1">Name</th>
+                        <th className="col-4">Flag</th>
+                        <th className="col-1">Published</th>
+                        <th className="col-1">Date Added</th>
+                        <th className="col-1">Date Updated</th>
+                        <th className="col-1">Actions</th>
                     </tr>
                 </thead>
                 <tbody>

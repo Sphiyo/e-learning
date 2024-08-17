@@ -1,4 +1,4 @@
-import { Languages } from "next/dist/lib/metadata/types/alternative-urls-types";
+
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -23,11 +23,11 @@ export interface BodyTypeAll {
     }[];    
 }
 
-const data = { language: [
+const data = { languages: [
     {
         "iso": "FR",
         "name": "Francais",
-        "flag": "url",
+        "flag": "https://link-to-a-language-flag/FR",
         "published": true,
         "createdDate": "2024-07-24",
         "modifiedDate": "2024-08-01"
@@ -35,7 +35,7 @@ const data = { language: [
     {
         "iso": "EN",
         "name": "English",
-        "flag": "url",
+        "flag": "https://link-to-a-language-flag/EN",
         "published": true,
         "createdDate": "2024-07-24",
         "modifiedDate": "2024-08-08"
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     if (!iso){
         return NextResponse.json(data);
     }
-    const queriedLanguages = data.language.filter(
+    const queriedLanguages = data.languages.filter(
         currentLanguage => {
             return currentLanguage.iso == iso;
         }
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const body = await req.json();
     let Found = false;
-    for (const language of data.language){
+    for (const language of data.languages){
         if ( language.iso == body.iso ){
             Found = true;
         } 
@@ -70,14 +70,14 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({message: "Post Failed: Already in"});
     }
     const newLanguage = {
-        "iso": body["iso"],
-        "name": body["name"],
-        "flag": body["flag"],
-        "published": body["published"] ? true: false,
-        "createdDate": body["createdDate"],
-        "modifiedDate": body["modifiedDate"]
+        iso: body["iso"],
+        name: body["name"],
+        flag: body["flag"],
+        published: body["published"] ? true: false,
+        createdDate: body["createdDate"],
+        modifiedDate: body["modifiedDate"]
     }
-    data.language.push(newLanguage);
+    data.languages.push(newLanguage);
     
     return NextResponse.json({message: "Post Success"});
 }
@@ -86,13 +86,13 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
     const {iso}: {iso: string} = await req.json();
-    data.language = data.language.filter( lang=> lang.iso != iso );
+    data.languages = data.languages.filter( lang=> lang.iso != iso );
     
     return NextResponse.json({message: "Delete Success"});
 }
 export async function PUT(req: NextRequest) {
     const body = await req.json();
-    data.language = data.language.map( lang=> {
+    data.languages = data.languages.map( lang=> {
         if(lang.iso == body.iso) {
             return {
                 "iso": body.iso,

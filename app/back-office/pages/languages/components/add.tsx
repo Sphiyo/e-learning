@@ -85,10 +85,10 @@ export default function Add(props: any){
     const handleAddShow = () => setShowAdd(true);
 
     return (
-    <>
-        <Link href="#" onClick={openAddModal}>Add Language</Link>
+    <div>
+        <Link href="#" onClick={openAddModal} className="btn btn-primary">Add Language</Link>
         <InitAddModal /> 
             {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
-    </>
+    </div>
     );
 }
