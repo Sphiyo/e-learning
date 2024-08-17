@@ -105,7 +105,7 @@ export async function PUT(req: NextRequest) {
                 title: body["title"],
                 description: body["description"],
                 published: body["published"] ? true: false,
-                createdDate: body["createdDate"],
+                createdDate: currentCategory["createdDate"],
                 modifiedDate: body["modifiedDate"],
                 displayAtHome: body["displayAtHome"] ? true: false,
             }

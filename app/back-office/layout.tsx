@@ -8,8 +8,8 @@ export default function BackOfficeLayout({children}: {children: React.ReactNode}
         <div className="container-fluid">
             <Header />
             <div className="row">
-                <div className="col-2"><Sidebar /></div>
-                <div className="col-10"><Suspense fallback="Loading">{children}</Suspense></div>
+                <div className="col-1"><Sidebar /></div>
+                <div className="col-11"><Suspense fallback="Loading">{children}</Suspense></div>
                 
             </div>
         </div>

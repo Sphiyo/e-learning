@@ -19,7 +19,7 @@ export default async function CategoryPage(){
         <>
             <Add />
             <List 
-                categories={categories} 
+                categories={categories}
             /> 
         </>
     );

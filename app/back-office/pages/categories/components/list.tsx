@@ -11,6 +11,7 @@ interface Context {
         description: string,
         published: boolean,
         createdDate: string,
+        modifiedDate: string,
         displayAtHome: boolean      
     }[];
 
@@ -42,6 +43,7 @@ export default function List(props: Context) {
                         <th className="col-4">Description</th>
                         <th className="col-1">Published</th>
                         <th className="col-1">Date Added</th>
+                        <th className="col-1">Date Updated</th>
                         <th className="col-1">Display At Home</th>
                         <th className="col-1">Actions</th>
                     </tr>
@@ -62,6 +64,7 @@ export default function List(props: Context) {
                                 />
                             </td>
                             <td>{category.createdDate}</td>
+                            <td>{category.modifiedDate}</td>
                             <td>
                                 <input 
                                     title="displayAtHome" 

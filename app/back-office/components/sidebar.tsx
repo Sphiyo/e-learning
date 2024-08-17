@@ -14,13 +14,13 @@ export default function Sidebar() {
                 className={`btn btn-second px-3 py-2 rounded-0 ${getActive(path, "/back-office/pages/languages")}`}
                 href="/back-office/pages/languages"
             >
-                <span className="h2">Languages</span>
+                <span className="h5">Languages</span>
             </Link>
             <Link
                 className={`btn btn-second px-3 py-2 rounded-0 ${getActive(path, "/back-office/pages/categories")}`}
                 href="/back-office/pages/categories"
             >
-                <span className="h2">Categories</span>
+                <span className="h5">Categories</span>
             </Link>
             
         </nav>
