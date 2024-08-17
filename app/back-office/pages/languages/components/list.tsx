@@ -31,8 +31,8 @@ export default function List(props: Context) {
 
     return (
         <>
-            {showEdit && <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} />}
-            {showDelete && <Delete showDelete={showDelete} handleDeleteClose={handleDeleteClose} />}
+            <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} />
+            <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} />
 
             <table className="table table-secondary">
                 <thead className="table-dark">

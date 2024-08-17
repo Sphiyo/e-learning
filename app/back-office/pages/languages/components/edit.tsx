@@ -1,20 +1,14 @@
 "use client";
-import BSModal from "@/app/components/BSModal";
 import $ from "jquery";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { Button, Modal } from "react-bootstrap";
 
 
 function InitEditModal( props: any ){
-    console.log(props)
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-
+    const router = useRouter();
     return (
         <Modal show={props.showEdit} onHide={props.handleEditClose}>
             <form action="#">
@@ -31,19 +25,17 @@ function InitEditModal( props: any ){
                     <label htmlFor="edit-modal-flag"> Flag </label> <br />
                     <input type="text" id="edit-modal-flag" name="edit-modal-flag" defaultValue={props.language.flag} required /><br />
                     <label htmlFor="edit-modal-published"> Published </label> <br />
-                    <input type="checkbox" id="edit-modal-published" name="edit-modal-published" defaultValue={props.language.published} /><br />
+                    <input type="checkbox" id="edit-modal-published" name="edit-modal-published" defaultChecked={props.language.published} /><br />
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick={()=> editSend()} variant="primary">Save changes</Button>
+                    <Button onClick={(e)=> editSend(e, router, props.handleEditClose)} variant="primary">Save changes</Button>
                 </Modal.Footer>
-
-
             </form>
         </Modal>
     );
 }
-async function editSend(event: MouseEvent){
+async function editSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
     const iso = $(`#edit-modal-iso`).val();
     const name = $(`#edit-modal-name`).val();
     const flag = $(`#edit-modal-flag`).val();
@@ -73,8 +65,9 @@ async function editSend(event: MouseEvent){
             cache: 'no-store',
             body: JSON.stringify(data)
         }
-    );
-    
+    );   
+    handleEditClose();
+    router.refresh();
 }
 
 export default function Edit(props: any) {
