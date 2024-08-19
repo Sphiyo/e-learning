@@ -38,14 +38,14 @@ export default function List(props: Context) {
             <table className="table table-secondary text-center">
                 <thead className="table-dark">
                     <tr> 
-                        <th className="col-1">Code</th>
-                        <th className="col-1">Title</th>
-                        <th className="col-4">Description</th>
-                        <th className="col-1">Published</th>
-                        <th className="col-1">Date Added</th>
-                        <th className="col-1">Date Updated</th>
-                        <th className="col-1">Display At Home</th>
-                        <th className="col-1">Actions</th>
+                        <th style={{minWidth: "060px"}}>Code</th>
+                        <th style={{minWidth: "125px"}}>Title</th>
+                        <th style={{minWidth: "200px"}}>Description</th>
+                        <th style={{minWidth: "060px"}}>Published</th>
+                        <th style={{minWidth: "090px"}}>Date Added</th>
+                        <th style={{minWidth: "105px"}}>Date Updated</th>
+                        <th style={{minWidth: "125px"}}>Display At Home</th>
+                        <th style={{minWidth: "165px"}}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

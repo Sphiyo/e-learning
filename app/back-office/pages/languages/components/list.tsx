@@ -18,7 +18,7 @@ import {useState} from "react";
 
 export default function List(props: Context) {
 
-    const [language, setLanguage] = useState('');
+    const [language, setLanguage] = useState<any>('');
 
 
     const [showEdit, setShowEdit] = useState(false);
@@ -36,14 +36,14 @@ export default function List(props: Context) {
 
             <table className="table table-secondary text-center">
                 <thead className="table-dark">
-                    <tr>
-                        <th className="col-1">ISO</th>
-                        <th className="col-1">Name</th>
-                        <th className="col-4">Flag</th>
-                        <th className="col-1">Published</th>
-                        <th className="col-1">Date Added</th>
-                        <th className="col-1">Date Updated</th>
-                        <th className="col-1">Actions</th>
+                    <tr> 
+                        <th style={{minWidth: "060px"}}>ISO</th>
+                        <th style={{minWidth: "125px"}}>Name</th>
+                        <th style={{minWidth: "200px"}}>Flag</th>
+                        <th style={{minWidth: "060px"}}>Published</th>
+                        <th style={{minWidth: "090px"}}>Date Added</th>
+                        <th style={{minWidth: "105px"}}>Date Updated</th>
+                        <th style={{minWidth: "165px"}}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +59,7 @@ export default function List(props: Context) {
                                     type="checkbox" 
                                     checked={language.published? true:false} 
                                     readOnly={true}
+                                    disabled={true}
                                 />
                             </td>
                             <td>{language.createdDate}</td>

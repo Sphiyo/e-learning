@@ -16,11 +16,11 @@ export default async function CategoryPage(){
 
 
     return (
-        <>
+        <div className="d-flex flex-column align-items-end">
             <Add />
             <List 
                 categories={categories}
             /> 
-        </>
+        </div>
     );
 }

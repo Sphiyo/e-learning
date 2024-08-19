@@ -9,6 +9,7 @@ function getActive(currentPath: string, path: string){
 export default function Sidebar() {
     const path = usePathname();
     return (
+    <div className="d-flex justify-content-center">
         <nav className="text-center btn-group-vertical my-2">
             <Link
                 className={`btn btn-second px-3 py-2 rounded-0 ${getActive(path, "/back-office/pages/languages")}`}
@@ -24,5 +25,6 @@ export default function Sidebar() {
             </Link>
             
         </nav>
+    </div>
     );
 }

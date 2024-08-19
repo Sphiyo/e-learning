@@ -81,8 +81,6 @@ export async function openAddModal(){
 export default function Add(props: any){
 
     const [showAdd, setShowAdd] = useState(false);
-    const handleAddClose = () => setShowAdd(false);
-    const handleAddShow = () => setShowAdd(true);
 
     return (
     <div>
