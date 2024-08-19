@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-export interface BodyType {
+export interface Localisation {
     language: {
         iso: string;
         name: string;
@@ -11,16 +11,6 @@ export interface BodyType {
         createdDate: string;
         modifiedDate: string;
     }; 
-}
-export interface BodyTypeAll {
-    languages: {
-        iso: string;
-        name: string;
-        flag: string;
-        published: boolean;
-        createdDate: string;
-        modifiedDate: string;
-    }[];    
 }
 
 const data = { languages: [

@@ -2,34 +2,25 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-export interface BodyType {
-    category: {
-        code: string,
-        title: string,
-        description: string,
-        published: boolean,
-        createdDate: string,
-        modifiedDate: string,
-        displayAtHome: boolean
-    }; 
-}
-export interface BodyTypeAll {
+
+
+export interface CategoryType {
     categories: {
         code: string,
-        title: string,
-        description: string,
+        title: {iso: string},
+        description: {iso: string},
         published: boolean,
         createdDate: string,
         modifiedDate: string,
         displayAtHome: boolean
-    }[];    
+    };    
 }
 
 const data = { categories: [
     {
         code: "0001",
-        title: "IT Field",
-        description: "This category contains courses about it fields",
+        title: { "EN": "IT Field" , "FR": "Informatique"},
+        description: { "EN": "This category contains courses about it fields" , "FR": "Cette categorie contient des cours d'informatiques"},
         published: true,
         createdDate: "2024-07-24",
         modifiedDate: "2024-08-01",
@@ -37,8 +28,8 @@ const data = { categories: [
     },
     {
         code: "0002",
-        title: "Economics",
-        description: "This category contains courses about economics and managments",
+        title: { "EN": "Economics" , "FR": "Economiques"},
+        description: { "EN": "This category contains courses about economics and managments" , "FR": "Cette categorie contient des cours d'economie and gestion"},
         published: true,
         createdDate: "2024-08-02",
         modifiedDate: "2024-08-01",
@@ -49,6 +40,7 @@ const data = { categories: [
 
 export async function GET(req: NextRequest) {
     const header = req.nextUrl.searchParams;
+    const lang = header.get("lang");
     const code = header.get("code");
     if (!code){
         return NextResponse.json(data);

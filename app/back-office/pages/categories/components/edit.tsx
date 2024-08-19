@@ -10,7 +10,12 @@ import { Button, Modal } from "react-bootstrap";
 export default function Edit(props: any) {
     return (
         <>
-            <InitEditModal showEdit={props.showEdit} category={props.category}  handleEditClose={props.handleEditClose} />
+            <InitEditModal 
+                showEdit={props.showEdit} 
+                category={props.category}  
+                handleEditClose={props.handleEditClose}
+                lang={props.lang} 
+            />
         </>
     );
 }
@@ -29,9 +34,9 @@ function InitEditModal( props: any ){
                     <label htmlFor="edit-modal-code"> Code </label> <br />
                     <input type="text" id="edit-modal-code" readOnly={true} name="edit-modal-code" defaultValue={props.category.code} required /><br />
                     <label htmlFor="edit-modal-title"> Title </label> <br />
-                    <input type="text" id="edit-modal-title" name="edit-modal-title" defaultValue={props.category.title} required /><br />
+                    <input type="text" id="edit-modal-title" name="edit-modal-title" defaultValue={props.category?.title?.[props.lang]} required /><br />
                     <label htmlFor="edit-modal-description"> Description </label> <br />
-                    <input type="text" id="edit-modal-description" name="edit-modal-description" defaultValue={props.category.description} required /><br />
+                    <input type="text" id="edit-modal-description" name="edit-modal-description" defaultValue={props.category?.description?.[props.lang] || ""} required /><br />
                     <label htmlFor="edit-modal-published"> Published </label> <br />
                     <input type="checkbox" id="edit-modal-published" name="edit-modal-published" defaultChecked={props.category.published} /><br />
                     <label htmlFor="edit-modal-displayAtHome"> Display At Home </label> <br />

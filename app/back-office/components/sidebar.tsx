@@ -19,7 +19,7 @@ export default function Sidebar() {
             </Link>
             <Link
                 className={`btn btn-second px-3 py-2 rounded-0 ${getActive(path, "/back-office/pages/categories")}`}
-                href="/back-office/pages/categories"
+                href="/back-office/pages/categories/EN"
             >
                 <span className="h5">Categories</span>
             </Link>

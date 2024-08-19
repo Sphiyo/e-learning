@@ -1,12 +1,12 @@
-import Add from "./components/add";
-import List from "./components/list";
+import Add from "../components/add";
+import List from "../components/list";
 
 
 
 
-export default async function CategoryPage(){
+export default async function CategoryPage({params, searchParams}: any){
     let response = await fetch(
-        "http://localhost:3000/api/categories/", {
+        `http://localhost:3000/api/categories?lang=${params.lang}`, {
             method: "GET",
             cache: 'no-store',
         }
@@ -20,6 +20,7 @@ export default async function CategoryPage(){
             <Add />
             <List 
                 categories={categories}
+                lang={params.lang}
             /> 
         </div>
     );

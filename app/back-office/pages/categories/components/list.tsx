@@ -14,7 +14,7 @@ interface Context {
         modifiedDate: string,
         displayAtHome: boolean      
     }[];
-
+    lang: string;
 }
         
 export default function List(props: Context) {
@@ -32,8 +32,8 @@ export default function List(props: Context) {
 
     return (
         <>
-            <Edit showEdit={showEdit} category={category} handleEditClose={handleEditClose} />
-            <Delete showDelete={showDelete} category={category} handleDeleteClose={handleDeleteClose} />
+            <Edit showEdit={showEdit} category={category} handleEditClose={handleEditClose} lang={props.lang} />
+            <Delete showDelete={showDelete} category={category} handleDeleteClose={handleDeleteClose} lang={props.lang} />
 
             <table className="table table-secondary text-center">
                 <thead className="table-dark">
@@ -53,8 +53,8 @@ export default function List(props: Context) {
                     props.categories.map(category => (    
                         <tr key={category.code}>
                             <td>{category.code}</td>
-                            <td>{category.title}</td>
-                            <td>{category.description}</td>
+                            <td>{category.title[props.lang]}</td>
+                            <td>{category.description[props.lang]}</td>
                             <td>
                                 <input 
                                     title="published" 
