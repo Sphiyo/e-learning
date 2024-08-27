@@ -158,8 +158,8 @@ export default function List(props: Context) {
                 props.categories.map(category => (    
                     <tr key={category.code}>
                         <td>{category.code}</td>
-                        <td>{category.title[props.lang]}</td>
-                        <td>{category.description[props.lang]}</td>
+                        <td>{category.title[props.lang] || category.title["EN"]}</td>
+                        <td>{category.description[props.lang] || category.description["EN"]}</td>
                         <td>
                             <input 
                                 title="published" 

@@ -22,14 +22,13 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
         if(tempTitle && tempDescription){
             titleValid = true;
         }
-        else{
-            continue;
-        }
         
         title[langGlob] = tempTitle; 
         description[langGlob] = tempDescription;
     }
-
+    if (!title["EN"] || !description["EN"]) {
+        return
+    }
     
     const published = $(`#add-modal-published`).is(':checked');
     const createdDate = new Date();

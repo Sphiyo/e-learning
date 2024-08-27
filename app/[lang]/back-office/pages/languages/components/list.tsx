@@ -141,7 +141,7 @@ export default function List(props: Context) {
                 props.languages.map(language => (                            
                     <tr key={language.code}>
                         <td>{language.code}</td>
-                        <td>{language.name[props.lang]}</td>
+                        <td>{language.name[props.lang] || language.name["EN"]}</td>
                         <td>{language.flag}</td>
                         <td>
                             <input

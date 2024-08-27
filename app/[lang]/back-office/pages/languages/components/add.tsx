@@ -11,10 +11,18 @@ const languagesGlobal = ["EN", "FR", "DE"];
 async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
     
     const code = $(`#add-modal-code`).val();
-   
+    let titleValid = false;
     const name: any = {};
     for( let langGlob of languagesGlobal){
-        name[langGlob] =  $(`#add-modal-name-${langGlob}`).val();
+        const tempName = $(`#add-modal-name-${langGlob}`).val();
+        if(tempName){
+            titleValid = true;
+        }
+        name[langGlob] =  tempName;
+        
+    }
+    if (!name["EN"]) {
+        return
     }
     const flag = $(`#add-modal-flag`).val();
     const published = $(`#add-modal-published`).is(':checked');
