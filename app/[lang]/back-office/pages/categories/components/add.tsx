@@ -1,5 +1,4 @@
 "use client";
-import CustomModal from "@/app/components/custom-modal";
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import $ from "jquery";
@@ -13,16 +12,24 @@ const languagesGlobal = ["EN", "FR", "DE"];
 async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
     
     const code = $(`#add-modal-code`).val();
+    let titleValid = false;
     const title: any = {};
     const description: any = {};
 
     for( let langGlob of languagesGlobal){
-        title[langGlob] =  $(`#add-modal-title-${langGlob}`).val();
+        const tempTitle = $(`#add-modal-title-${langGlob}`).val();
+        const tempDescription = $(`#add-modal-description-${langGlob}`).val();
+        if(tempTitle && tempDescription){
+            titleValid = true;
+        }
+        else{
+            continue;
+        }
+        
+        title[langGlob] = tempTitle; 
+        description[langGlob] = tempDescription;
     }
 
-    for( let langGlob of languagesGlobal){
-        description[langGlob] =  $(`#add-modal-description-${langGlob}`).val();
-    }
     
     const published = $(`#add-modal-published`).is(':checked');
     const createdDate = new Date();
@@ -36,7 +43,7 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
     const monthStr =String(month).padStart(2, '0');
     const yearStr =String(year).padStart(4, '0');
     const inpDate = `${yearStr}-${monthStr}-${dayStr}`;
-    if(!code || !title || !createdDate || !inpDate){
+    if(!code || !titleValid || !createdDate || !inpDate){
         return
     }
     const data = {

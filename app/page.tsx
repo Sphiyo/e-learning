@@ -1,24 +1,9 @@
 "use client";
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import BSModal from './components/BSModal';
+import { useRouter } from "next/navigation";
 
-function Example() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+export default function Home() {
+  useRouter().replace("/EN/back-office/pages/languages");
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <BSModal show={show} handleClose={handleClose}> bhefrv</BSModal>
-      
-    </>
+    <></>
   );
 }
-
-export default Example;
