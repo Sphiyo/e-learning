@@ -68,7 +68,7 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any}){
             <form action="#">
 
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Language</Modal.Title>
+                    <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>                        
