@@ -13,7 +13,7 @@ import {useState} from "react";
         createdDate: string;
         modifiedDate: string;       
     }[];
-
+    lang: string;
 }
 
 export default function List(props: Context) {
@@ -31,8 +31,8 @@ export default function List(props: Context) {
 
     return (
         <>
-            <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} />
-            <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} />
+            <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} lang={props.lang} />
+            <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} lang={props.lang} />
 
             <table className="table table-secondary text-center">
                 <thead className="table-dark">
