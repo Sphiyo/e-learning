@@ -20,7 +20,7 @@ export default async function LanguagePage({params, searchParams}: {params: {lan
 
     return (
         <div className="d-flex flex-column align-items-end">
-            <Add />
+            <Add lang={langToQuery} />
             <List 
                 languages={languages} 
                 lang={langToQuery}

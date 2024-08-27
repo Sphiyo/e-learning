@@ -81,8 +81,24 @@ export async function openAddModal(){
     modal.show();
 }
 
+function getFromLangAddCategory(lang: string){
+    switch(lang){
+        case "EN":
+            return "Add category";
+            break;
+        case "FR":
+            return "Ajouter une catégorie";
+            break;
+        case "DE":
+            return "Kategorie hinzufügen";
+            break;
+        default:
+            return "Add category";
+    }
+}
 
-export default function Add(props: any){
+
+export default function Add(props: {lang: string}){
 
     const [showAdd, setShowAdd] = useState(false);
     const handleAddClose = () => setShowAdd(false);
@@ -90,7 +106,7 @@ export default function Add(props: any){
 
     return (
     <>
-        <Link href="#" onClick={openAddModal} className="btn btn-primary">Add Category</Link>
+        <Link href="#" onClick={openAddModal} className="btn btn-primary">{getFromLangAddCategory(props.lang)}</Link>
         <InitAddModal /> 
             {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
     </>

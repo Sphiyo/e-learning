@@ -23,7 +23,7 @@ export default async function CategoryPage({params, searchParams}: {params: {lan
 
     return (
         <div className="d-flex flex-column align-items-end">
-            <Add />
+            <Add lang={langToQuery} />
             <List 
                 categories={categories}
                 lang={langToQuery}

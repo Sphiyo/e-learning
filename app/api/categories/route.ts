@@ -19,8 +19,12 @@ export interface CategoryType {
 const data = { categories: [
     {
         code: "0001",
-        title: { "EN": "IT Field" , "FR": "Informatique"},
-        description: { "EN": "This category contains courses about it fields" , "FR": "Cette categorie contient des cours d'informatiques"},
+        title: { "EN": "IT Field" , "FR": "Informatique", "DE": "Informatik" },
+        description: { 
+            "EN": "This category contains courses about it fields" , 
+            "FR": "Cette catégorie contient des cours d'informatiques",
+            "DE": "Diese Kategorie enthält Kurse zu IT-Bereichen"
+        },
         published: true,
         createdDate: "2024-07-24",
         modifiedDate: "2024-08-01",
@@ -28,8 +32,12 @@ const data = { categories: [
     },
     {
         code: "0002",
-        title: { "EN": "Economics" , "FR": "Economiques"},
-        description: { "EN": "This category contains courses about economics and managments" , "FR": "Cette categorie contient des cours d'economie and gestion"},
+        title: { "EN": "Economics" , "FR": "Economiques", "DE": "Ökonomie" },
+        description: { 
+            "EN": "This category contains courses about economics and managements" , 
+            "FR": "Cette catégorie contient des cours sur l'économie et la gestion",
+            "DE": "Diese Kategorie enthält Kurse über Wirtschaft und Management"
+        },
         published: true,
         createdDate: "2024-08-02",
         modifiedDate: "2024-08-01",

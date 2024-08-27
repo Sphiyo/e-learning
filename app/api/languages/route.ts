@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export interface Localisation {
     language: {
         iso: string;
-        name: string;
+        name: {iso: string},
         flag: string;
         published: boolean;
         createdDate: string;
@@ -16,7 +16,7 @@ export interface Localisation {
 const data = { languages: [
     {
         "iso": "FR",
-        "name": "Francais",
+        "name": { "EN": "French" , "FR": "Français", "DE": "Französisch" },
         "flag": "https://link-to-a-language-flag/FR",
         "published": true,
         "createdDate": "2024-07-24",
@@ -24,7 +24,7 @@ const data = { languages: [
     },
     {
         "iso": "EN",
-        "name": "English",
+        "name": { "EN": "English" , "FR": "Anglais", "DE": "Englisch" },
         "flag": "https://link-to-a-language-flag/EN",
         "published": true,
         "createdDate": "2024-07-24",

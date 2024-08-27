@@ -16,6 +16,102 @@ import {useState} from "react";
     lang: string;
 }
 
+function getFromLangTheTitle(lang: string){
+    switch(lang){
+        case "EN":
+            return "Title";
+            break;
+        case "FR":
+            return "Titre";
+            break;
+        case "DE":
+            return "Titel";
+            break;
+        default:
+            return "Title";
+    }
+}
+function getFromLangTheFlag(lang: string){
+    switch(lang){
+        case "EN":
+            return "Flag";
+            break;
+        case "FR":
+            return "Drapeau";
+            break;
+        case "DE":
+            return "Flagge";
+            break;
+        default:
+            return "Flag";
+    }
+}
+
+function getFromLangThePublished(lang: string){
+    switch(lang){
+        case "EN":
+            return "Published";
+            break;
+        case "FR":
+            return "Publié";
+            break;
+        case "DE":
+            return "Publiziert";
+            break;
+        default:
+            return "Published";
+    }
+}
+function getFromLangTheDateAdded(lang: string){
+    switch(lang){
+        case "EN":
+            return "Date Added";
+            break;
+        case "FR":
+            return "Date d'ajout";
+            break;
+        case "DE":
+            return "Datum hinzugefügt";
+            break;
+        default:
+            return "Date Added";
+    }
+}
+function getFromLangTheDateUpdated(lang: string){
+    switch(lang){
+        case "EN":
+            return "Date Updated";
+            break;
+        case "FR":
+            return "Date de mise à jour";
+            break;
+        case "DE":
+            return "Datum der Aktualisierung";
+            break;
+        default:
+            return "Date Updated";
+    }
+}
+
+
+function getFromLangTheActions(lang: string){
+    switch(lang){
+        case "EN":
+            return "Actions";
+            break;
+        case "FR":
+            return "Actions";
+            break;
+        case "DE":
+            return "Aktionen";
+            break;
+        default:
+            return "Actions";
+    }
+}
+        
+
+
 export default function List(props: Context) {
 
     const [language, setLanguage] = useState<any>('');
@@ -38,12 +134,12 @@ export default function List(props: Context) {
                 <thead className="table-dark">
                     <tr> 
                         <th style={{minWidth: "060px"}}>ISO</th>
-                        <th style={{minWidth: "125px"}}>Name</th>
-                        <th style={{minWidth: "200px"}}>Flag</th>
-                        <th style={{minWidth: "060px"}}>Published</th>
-                        <th style={{minWidth: "090px"}}>Date Added</th>
-                        <th style={{minWidth: "105px"}}>Date Updated</th>
-                        <th style={{minWidth: "165px"}}>Actions</th>
+                        <th style={{minWidth: "125px"}}>{getFromLangTheTitle(props.lang)}</th>
+                        <th style={{minWidth: "200px"}}>{getFromLangTheFlag(props.lang)}</th>
+                        <th style={{minWidth: "060px"}}>{getFromLangThePublished(props.lang)}</th>
+                        <th style={{minWidth: "090px"}}>{getFromLangTheDateAdded(props.lang)}</th>
+                        <th style={{minWidth: "105px"}}>{getFromLangTheDateUpdated(props.lang)}</th>
+                        <th style={{minWidth: "165px"}}>{getFromLangTheActions(props.lang)}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +147,7 @@ export default function List(props: Context) {
                     props.languages.map(language => (                            
                         <tr key={language.iso}>
                             <td>{language.iso}</td>
-                            <td>{language.name}</td>
+                            <td>{language.name[props.lang]}</td>
                             <td>{language.flag}</td>
                             <td>
                                 <input 

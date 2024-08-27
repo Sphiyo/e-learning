@@ -167,6 +167,7 @@ export default function List(props: Context) {
                                     type="checkbox" 
                                     checked={category.published? true:false} 
                                     readOnly={true}
+                                    disabled={true}
                                 />
                             </td>
                             <td>{category.createdDate}</td>
@@ -177,6 +178,7 @@ export default function List(props: Context) {
                                     type="checkbox" 
                                     checked={category.displayAtHome? true:false} 
                                     readOnly={true}
+                                    disabled={true}
                                 />
                             </td>
                             <td>

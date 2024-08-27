@@ -77,14 +77,29 @@ export async function openAddModal(){
     modal.show();
 }
 
+function getFromLangAddLanguage(lang: string){
+    switch(lang){
+        case "EN":
+            return "Add language";
+            break;
+        case "FR":
+            return "Ajouter une langue";
+            break;
+        case "DE":
+            return "Sprache hinzufügen";
+            break;
+        default:
+            return "Add language";
+    }
+}
 
-export default function Add(props: any){
+export default function Add(props: {lang: string}){
 
     const [showAdd, setShowAdd] = useState(false);
 
     return (
     <div>
-        <Link href="#" onClick={openAddModal} className="btn btn-primary">Add Language</Link>
+        <Link href="#" onClick={openAddModal} className="btn btn-primary">{getFromLangAddLanguage(props.lang)}</Link>
         <InitAddModal /> 
             {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
     </div>
