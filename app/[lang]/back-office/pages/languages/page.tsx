@@ -17,7 +17,6 @@ export default async function LanguagePage({params, searchParams}: {params: {lan
     let languages = (await response.json()).languages;
 
 
-
     return (
         <div className="d-flex flex-column align-items-end">
             <Add lang={langToQuery} />

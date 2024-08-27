@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 export interface CategoryType {
     categories: {
         code: string,
-        title: {iso: string},
-        description: {iso: string},
+        title: Object,
+        description: Object,
         published: boolean,
         createdDate: string,
         modifiedDate: string,
@@ -48,7 +48,6 @@ const data = { categories: [
 
 export async function GET(req: NextRequest) {
     const header = req.nextUrl.searchParams;
-    const lang = header.get("lang");
     const code = header.get("code");
     if (!code){
         return NextResponse.json(data);
@@ -65,8 +64,8 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const body = await req.json();
     let Found = false;
-    for (const category of data.categories){
-        if ( category.code == body.code ){
+    for (const category of data.categories) {
+        if ( category.code == body.code ) {
             Found = true;
         } 
     }

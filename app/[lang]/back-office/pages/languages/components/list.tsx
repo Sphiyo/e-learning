@@ -4,10 +4,10 @@ import Delete from "./delete";
 import {Button} from "react-bootstrap";
 import {useState} from "react";
 
- interface Context {
+interface Context {
     languages: {
-        iso: string;
-        name: string;
+        code: string;
+        name: Object;
         flag: string;
         published: boolean;
         createdDate: string;
@@ -46,7 +46,6 @@ function getFromLangTheFlag(lang: string){
             return "Flag";
     }
 }
-
 function getFromLangThePublished(lang: string){
     switch(lang){
         case "EN":
@@ -92,8 +91,6 @@ function getFromLangTheDateUpdated(lang: string){
             return "Date Updated";
     }
 }
-
-
 function getFromLangTheActions(lang: string){
     switch(lang){
         case "EN":
@@ -108,12 +105,9 @@ function getFromLangTheActions(lang: string){
         default:
             return "Actions";
     }
-}
-        
-
+}       
 
 export default function List(props: Context) {
-
     const [language, setLanguage] = useState<any>('');
 
 
@@ -126,56 +120,62 @@ export default function List(props: Context) {
     const handleDeleteShow = () => setShowDelete(true);
 
     return (
-        <>
-            <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} lang={props.lang} />
-            <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} lang={props.lang} />
+    <>
+        <Edit showEdit={showEdit} language={language} handleEditClose={handleEditClose} lang={props.lang} />
+        <Delete showDelete={showDelete} language={language} handleDeleteClose={handleDeleteClose} lang={props.lang} />
 
-            <table className="table table-secondary text-center">
-                <thead className="table-dark">
-                    <tr> 
-                        <th style={{minWidth: "060px"}}>ISO</th>
-                        <th style={{minWidth: "125px"}}>{getFromLangTheTitle(props.lang)}</th>
-                        <th style={{minWidth: "200px"}}>{getFromLangTheFlag(props.lang)}</th>
-                        <th style={{minWidth: "060px"}}>{getFromLangThePublished(props.lang)}</th>
-                        <th style={{minWidth: "090px"}}>{getFromLangTheDateAdded(props.lang)}</th>
-                        <th style={{minWidth: "105px"}}>{getFromLangTheDateUpdated(props.lang)}</th>
-                        <th style={{minWidth: "165px"}}>{getFromLangTheActions(props.lang)}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    props.languages.map(language => (                            
-                        <tr key={language.iso}>
-                            <td>{language.iso}</td>
-                            <td>{language.name[props.lang]}</td>
-                            <td>{language.flag}</td>
-                            <td>
-                                <input 
-                                    title="published" 
-                                    type="checkbox" 
-                                    checked={language.published? true:false} 
-                                    readOnly={true}
-                                    disabled={true}
-                                />
-                            </td>
-                            <td>{language.createdDate}</td>
-                            <td>{language.modifiedDate}</td>
-                            <td>
-                                <Button variant="primary" onClick={()=> {setLanguage(language); setShowEdit(true)}}>
-                                    Edit
-                                </Button>
-                                {" "}
-                                <Button variant="primary" onClick={()=>{ setLanguage(language); setShowDelete(true);
-                                    }
-                                }>
-                                    Delete
-                                </Button>
-                            </td>
-                        </tr>                            
-                    ))
-                }
-                </tbody>
-            </table>
-        </>
+        <table className="table table-secondary text-center">
+            <thead className="table-dark">
+                <tr> 
+                    <th className="text-nowrap" style={{minWidth: "060px"}}>Code</th>
+                    <th className="text-nowrap" style={{minWidth: "125px"}}>{getFromLangTheTitle(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "200px"}}>{getFromLangTheFlag(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "060px"}}>{getFromLangThePublished(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "090px"}}>{getFromLangTheDateAdded(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "105px"}}>{getFromLangTheDateUpdated(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "165px"}}>{getFromLangTheActions(props.lang)}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {
+                props.languages.map(language => (                            
+                    <tr key={language.code}>
+                        <td>{language.code}</td>
+                        <td>{language.name[props.lang]}</td>
+                        <td>{language.flag}</td>
+                        <td>
+                            <input
+                                title="published"
+                                type="checkbox"
+                                checked={language.published? true:false}
+                                readOnly={true}
+                                disabled={true}
+                            />
+                        </td>
+                        <td>{language.createdDate}</td>
+                        <td>{language.modifiedDate}</td>
+                        <td>
+                            <Button variant="primary" onClick={()=> {
+                                    setLanguage(language); 
+                                    setShowEdit(true)
+                                }
+                            }>
+                                Edit
+                            </Button>
+                            {" "}
+                            <Button variant="primary" onClick={()=>{ 
+                                    setLanguage(language);
+                                    setShowDelete(true);
+                                }
+                            }>
+                                Delete
+                            </Button>
+                        </td>
+                    </tr>                            
+                ))
+            }
+            </tbody>
+        </table>
+    </>
     );
 }

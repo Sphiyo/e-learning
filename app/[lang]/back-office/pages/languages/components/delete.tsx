@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-// async function getLanguage(iso: string) : Promise<BodyType>{
+// async function getLanguage(code: string) : Promise<BodyType>{
 //     const response = await fetch(
-//         `http://localhost:3000/api/languages/?iso=${iso}`, {
+//         `http://localhost:3000/api/languages/?code=${code}`, {
 //             method: "GET",
 //             cache: 'no-store'
 //         }
@@ -34,8 +34,8 @@ function InitDeleteModal(props: any){
             <Modal.Body>
                 <p> Confirm </p>
                 <div hidden>
-                    <label htmlFor="delete-modal-iso"> ISO </label> <br />
-                    <input type="text" id="delete-modal-iso" readOnly={true} name="delete-modal-iso" defaultValue={props.language.iso} required /><br />
+                    <label htmlFor="delete-modal-code"> Code </label> <br />
+                    <input type="text" id="delete-modal-code" readOnly={true} name="delete-modal-code" defaultValue={props.language.code} required /><br />
                     <label htmlFor="delete-modal-name"> Name </label> <br />
                     <input type="text" id="delete-modal-name" name="delete-modal-name" defaultValue={props.language.name} required /><br />
                     <label htmlFor="delete-modal-flag"> Flag </label> <br />
@@ -55,12 +55,12 @@ function InitDeleteModal(props: any){
 }
 
 async function deleteSend(event: MouseEvent, router: AppRouterInstance, handleDeleteClose: any){
-    const iso = $(`#delete-modal-iso`).val();
+    const code = $(`#delete-modal-code`).val();
     await fetch(`http://localhost:3000/api/languages/`, {
         method: "DELETE",
         cache: 'no-store',
         body: JSON.stringify({
-          iso: iso
+          code: code
         })
     }); 
     handleDeleteClose();

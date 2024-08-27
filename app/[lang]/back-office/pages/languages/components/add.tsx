@@ -1,16 +1,25 @@
 "use client";
-import CustomModal from "@/app/components/custom-modal";
 import Link from "next/link";
 import { MouseEvent, useState } from "react";
 import $ from "jquery";
+import { Button, Modal } from "react-bootstrap";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 
+const languagesGlobal = ["EN", "FR", "DE"];
 
-
-async function addSend(){
-    const iso = $(`#add-modal-iso`).val();
-    const name = $(`#add-modal-name`).val();
+async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
+    
+    const code = $(`#add-modal-code`).val();
+   
+    const name: any = {};
+    for( let langGlob of languagesGlobal){
+        name[langGlob] =  $(`#add-modal-name-${langGlob}`).val();
+    }
     const flag = $(`#add-modal-flag`).val();
     const published = $(`#add-modal-published`).is(':checked');
+    
+
     const createdDate = new Date();
     
     const day = createdDate.getDate();
@@ -21,15 +30,18 @@ async function addSend(){
     const monthStr =String(month).padStart(2, '0');
     const yearStr =String(year).padStart(4, '0');
     const inpDate = `${yearStr}-${monthStr}-${dayStr}`;
-
+    if(!code || !name || !createdDate || !inpDate){
+        return
+    }
     const data = {
-        iso : iso,
+        code : code,
         name : name,
         flag : flag,
         published : published? true : false,
         createdDate : inpDate,
         modifiedDate : inpDate,
     }
+  
     await fetch(
         `http://localhost:3000/api/languages/`, {
             method: "POST",
@@ -37,45 +49,67 @@ async function addSend(){
             body: JSON.stringify(data)
         }
     );
-    
+    handleEditClose();
+    router.refresh();
 }
 
 
 
-function InitAddModal(){
+function InitAddModal(props: {showAdd: any, handleAddClose: any}){
+    const router = useRouter();
     return (
-        <CustomModal 
-            id="add-modal" 
-            title="Add a Language" 
-            btnTitle="Add" 
-            onSuccess={()=>{
-                addSend();
-                setTimeout(()=>(window.location.reload()), 500);
-            }
-        }
-        > 
+        <Modal show={props.showAdd} onHide={props.handleAddClose}>
             <form action="#">
-                <div className="modal-body">
-                    <label htmlFor="add-modal-iso"> ISO </label> <br />
-                    <input type="text" id="add-modal-iso" name="add-modal-iso" required /><br />
-                    <label htmlFor="add-modal-name"> Name </label> <br />
-                    <input type="text" id="add-modal-name" name="add-modal-name" required /><br />
-                    <label htmlFor="add-modal-flag"> Flag </label> <br />
-                    <input type="text" id="add-modal-flag" name="add-modal-flag" required /><br />
-                    <label htmlFor="add-modal-published"> Published </label> <br />
-                    <input type="checkbox" id="add-modal-published" name="add-modal-published" /><br />
-                </div> 
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Language</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <div className="modal-body">
+                        <label htmlFor="add-modal-code"> Code </label> <br />
+                        <input type="text" id="add-modal-code" name="add-modal-code" required={true} />
+
+                        <br />
+                        <br />
+
+                        Name <br />
+                        {languagesGlobal.map(langGlob=>(
+                            <label key={langGlob + "-add-name"}> {langGlob}: 
+                                <input 
+                                    type="text" 
+                                    id={`add-modal-name-${langGlob}`}
+                                    name={`add-modal-name-${langGlob}`}
+                                    required={true}
+                                />
+                                <br />
+                            </label> 
+                        ))}
+
+                        <br />
+                        <br />
+
+                        <label htmlFor="add-modal-flag"> Flag </label> <br />
+                        <input type="text" id="add-modal-flag" name="add-modal-flag" required />
+
+                        <br />
+                        <br />
+                        <label htmlFor="add-modal-published"> Published </label> 
+                        <br />
+                        <input type="checkbox" id="add-modal-published" name="add-modal-published" />
+                        <br />
+                    </div> 
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button onClick={(e)=> addSend(e, router, props.handleAddClose)} variant="primary">Save changes</Button>
+                </Modal.Footer>
             </form>
-        </CustomModal>
+        </Modal>
     );
 }
 
 
-export async function openAddModal(){
-    const {Modal} = require("bootstrap");
-    let modal = new Modal("#add-modal");
-    modal.show();
-}
+
 
 function getFromLangAddLanguage(lang: string){
     switch(lang){
@@ -96,12 +130,18 @@ function getFromLangAddLanguage(lang: string){
 export default function Add(props: {lang: string}){
 
     const [showAdd, setShowAdd] = useState(false);
-
+    const handleAddOpen = ()=>setShowAdd(true);
+    const handleAddClose = ()=>setShowAdd(false);
     return (
     <div>
-        <Link href="#" onClick={openAddModal} className="btn btn-primary">{getFromLangAddLanguage(props.lang)}</Link>
-        <InitAddModal /> 
-            {/* <button onClick={()=>openEditModal("edit-modal")}> Show It </button> */}
+        <Link 
+            href="#" 
+            onClick={handleAddOpen} 
+            className="btn btn-primary"
+        >
+            {getFromLangAddLanguage(props.lang)}
+        </Link>
+        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose}/> 
     </div>
     );
 }

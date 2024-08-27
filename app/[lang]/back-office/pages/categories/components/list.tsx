@@ -7,8 +7,8 @@ import {useState} from "react";
 interface Context {
     categories: {
         code: string,
-        title: string,
-        description: string,
+        title: Object,
+        description: Object,
         published: boolean,
         createdDate: string,
         modifiedDate: string,
@@ -124,8 +124,7 @@ function getFromLangTheActions(lang: string){
 }
         
 export default function List(props: Context) {
-
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState<any>('');
 
 
     const [showEdit, setShowEdit] = useState(false);
@@ -137,66 +136,66 @@ export default function List(props: Context) {
     const handleDeleteShow = () => setShowDelete(true);
 
     return (
-        <>
-            <Edit showEdit={showEdit} category={category} handleEditClose={handleEditClose} lang={props.lang} />
-            <Delete showDelete={showDelete} category={category} handleDeleteClose={handleDeleteClose} lang={props.lang} />
+    <>
+        <Edit showEdit={showEdit} category={category} handleEditClose={handleEditClose} lang={props.lang} />
+        <Delete showDelete={showDelete} category={category} handleDeleteClose={handleDeleteClose} lang={props.lang} />
 
-            <table className="table table-secondary text-center">
-                <thead className="table-dark">
-                    <tr> 
-                        <th className="text-nowrap" style={{minWidth: "060px"}}>Code</th>
-                        <th className="text-nowrap" style={{minWidth: "125px"}}>{getFromLangTheTitle(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "200px"}}>{getFromLangTheDescription(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "060px"}}>{getFromLangThePublished(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "090px"}}>{getFromLangTheDateAdded(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "105px"}}>{getFromLangTheDateUpdated(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "125px"}}>{getFromLangTheDisplayHome(props.lang)}</th>
-                        <th className="text-nowrap" style={{minWidth: "165px"}}>{getFromLangTheActions(props.lang)}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    props.categories.map(category => (    
-                        <tr key={category.code}>
-                            <td>{category.code}</td>
-                            <td>{category.title[props.lang]}</td>
-                            <td>{category.description[props.lang]}</td>
-                            <td>
-                                <input 
-                                    title="published" 
-                                    type="checkbox" 
-                                    checked={category.published? true:false} 
-                                    readOnly={true}
-                                    disabled={true}
-                                />
-                            </td>
-                            <td>{category.createdDate}</td>
-                            <td>{category.modifiedDate}</td>
-                            <td>
-                                <input 
-                                    title="displayAtHome" 
-                                    type="checkbox" 
-                                    checked={category.displayAtHome? true:false} 
-                                    readOnly={true}
-                                    disabled={true}
-                                />
-                            </td>
-                            <td>
-                                <Button variant="primary" onClick={()=> {setCategory(category); setShowEdit(true)}}>
-                                    Edit
-                                </Button>
-                                {" "}
-                                <Button variant="primary" onClick={()=>{ setCategory(category); setShowDelete(true);
-                                    }
-                                }>
-                                    Delete
-                                </Button>
-                            </td>
-                        </tr>                            
-                    ))
-                }
-                </tbody>
-            </table>
-        </>
+        <table className="table table-secondary text-center">
+            <thead className="table-dark">
+                <tr> 
+                    <th className="text-nowrap" style={{minWidth: "060px"}}>Code</th>
+                    <th className="text-nowrap" style={{minWidth: "125px"}}>{getFromLangTheTitle(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "200px"}}>{getFromLangTheDescription(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "060px"}}>{getFromLangThePublished(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "090px"}}>{getFromLangTheDateAdded(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "105px"}}>{getFromLangTheDateUpdated(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "125px"}}>{getFromLangTheDisplayHome(props.lang)}</th>
+                    <th className="text-nowrap" style={{minWidth: "165px"}}>{getFromLangTheActions(props.lang)}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {
+                props.categories.map(category => (    
+                    <tr key={category.code}>
+                        <td>{category.code}</td>
+                        <td>{category.title[props.lang]}</td>
+                        <td>{category.description[props.lang]}</td>
+                        <td>
+                            <input 
+                                title="published" 
+                                type="checkbox" 
+                                checked={category.published? true:false} 
+                                readOnly={true}
+                                disabled={true}
+                            />
+                        </td>
+                        <td>{category.createdDate}</td>
+                        <td>{category.modifiedDate}</td>
+                        <td>
+                            <input 
+                                title="displayAtHome" 
+                                type="checkbox" 
+                                checked={category.displayAtHome? true:false} 
+                                readOnly={true}
+                                disabled={true}
+                            />
+                        </td>
+                        <td>
+                            <Button variant="primary" onClick={()=> {setCategory(category); setShowEdit(true)}}>
+                                Edit
+                            </Button>
+                            {" "}
+                            <Button variant="primary" onClick={()=>{ setCategory(category); setShowDelete(true);
+                                }
+                            }>
+                                Delete
+                            </Button>
+                        </td>
+                    </tr>                            
+                ))
+            }
+            </tbody>
+        </table>
+    </>
     );
 }

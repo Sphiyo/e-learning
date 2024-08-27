@@ -20,7 +20,6 @@ export default async function CategoryPage({params, searchParams}: {params: {lan
     let categories = (await response.json()).categories;
 
 
-
     return (
         <div className="d-flex flex-column align-items-end">
             <Add lang={langToQuery} />

@@ -6,6 +6,7 @@ import { MouseEvent } from "react";
 
 import { Button, Modal } from "react-bootstrap";
 
+const languagesGlobal = ["EN", "FR", "DE"];
 
 function InitEditModal( props: any ){
     const router = useRouter();
@@ -18,14 +19,50 @@ function InitEditModal( props: any ){
                 </Modal.Header>
 
                 <Modal.Body>
-                    <label htmlFor="edit-modal-iso"> ISO </label> <br />
-                    <input type="text" id="edit-modal-iso" readOnly={true} name="edit-modal-iso" defaultValue={props.language.iso} required /><br />
-                    <label htmlFor="edit-modal-name"> Name </label> <br />
-                    <input type="text" id="edit-modal-name" name="edit-modal-name" defaultValue={props.language.name} required /><br />
+                    <label htmlFor="edit-modal-code"> Code </label> <br />
+                    <input 
+                        type="text" 
+                        id="edit-modal-code" 
+                        readOnly={true} 
+                        name="edit-modal-code" 
+                        defaultValue={props.language.code} 
+                        required 
+                    />
+                    <br />
+                    <br />
+                    Name <br />
+                    {languagesGlobal.map(langGlob=>(
+                        <label key={langGlob}> {langGlob}: 
+                            <input 
+                                type="text" 
+                                id={`edit-modal-name-${langGlob}`}
+                                name={`edit-modal-name-${langGlob}`}
+                                defaultValue={props.language.name?.[langGlob]} 
+                                required 
+                            />
+                            <br />
+                        </label> 
+                    ))}
+                    <br />
+                    <br />
                     <label htmlFor="edit-modal-flag"> Flag </label> <br />
-                    <input type="text" id="edit-modal-flag" name="edit-modal-flag" defaultValue={props.language.flag} required /><br />
+                    <input
+                        type="text" 
+                        id="edit-modal-flag" 
+                        name="edit-modal-flag" 
+                        defaultValue={props.language.flag} 
+                        required
+                    />
+                    <br />
+                    <br />
                     <label htmlFor="edit-modal-published"> Published </label> <br />
-                    <input type="checkbox" id="edit-modal-published" name="edit-modal-published" defaultChecked={props.language.published} /><br />
+                    <input 
+                        type="checkbox" 
+                        id="edit-modal-published" 
+                        name="edit-modal-published" 
+                        defaultChecked={props.language.published}
+                    />
+                    <br />
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -36,8 +73,12 @@ function InitEditModal( props: any ){
     );
 }
 async function editSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
-    const iso = $(`#edit-modal-iso`).val();
-    const name = $(`#edit-modal-name`).val();
+    const code = $(`#edit-modal-code`).val();
+    const name: any = {};
+    for( let langGlob of languagesGlobal){
+        name[langGlob] =  $(`#edit-modal-name-${langGlob}`).val();
+    }
+    // name = $(`#edit-modal-name`).val();
     const flag = $(`#edit-modal-flag`).val();
     const published = $(`#edit-modal-published`).is(':checked');
     
@@ -53,7 +94,7 @@ async function editSend(event: MouseEvent, router: AppRouterInstance, handleEdit
     const inpDate = `${yearStr}-${monthStr}-${dayStr}`;
 
     const data = {
-        iso : iso,
+        code : code,
         name : name,
         flag : flag,
         published : published? true : false,
@@ -73,7 +114,11 @@ async function editSend(event: MouseEvent, router: AppRouterInstance, handleEdit
 export default function Edit(props: any) {
     return (
         <>
-            <InitEditModal showEdit={props.showEdit} language={props.language}  handleEditClose={props.handleEditClose} />
+            <InitEditModal 
+                showEdit={props.showEdit} 
+                language={props.language} 
+                lang={props.lang} 
+                handleEditClose={props.handleEditClose} />
         </>
     );
 }
