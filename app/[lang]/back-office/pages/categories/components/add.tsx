@@ -67,7 +67,8 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
 
 
 
-function InitAddModal(props: {showAdd: any, handleAddClose: any}){
+function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
+    const [showMore, setShowMore] = useState<boolean>(false);
     const router = useRouter();
     return (
         <Modal show={props.showAdd} onHide={props.handleAddClose}>
@@ -82,33 +83,65 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any}){
                         <label htmlFor="add-modal-code"> Code </label> <br />
                         <input type="text" id="add-modal-code" name="add-modal-code" required />
                         <br /><br />
-
+                        <button type="button" className="btn btn-dark" onClick={()=>setShowMore(!showMore)}>Show More</button><br />
                         Title <br />
-                        {languagesGlobal.map(langGlob=>(
-                            <label key={langGlob + "-title"}> {langGlob}: 
-                                <input 
-                                    type="text" 
-                                    id={`add-modal-title-${langGlob}`}
-                                    name={`add-modal-title-${langGlob}`}
-                                    required={true}
-                                />
-                                <br />
-                            </label> 
-                        ))}
+                        {
+                            (showMore) ?
+                            (
+                                languagesGlobal.map(langGlob=>(
+                                    <label key={langGlob + "add-title-category"}> {langGlob}: 
+                                        <input 
+                                            type="text" 
+                                            id={`add-modal-title-${langGlob}`}
+                                            name={`add-modal-title-${langGlob}`}
+                                            required={true}
+                                        />
+                                        <br />
+                                    </label> 
+                                ))
+                            ) :
+                            (
+                                <label> {props.lang}: 
+                                    <input 
+                                        type="text" 
+                                        id={`add-modal-title-${props.lang}`}
+                                        name={`add-modal-title-${props.lang}`}
+                                        required={true}
+                                    />
+                                    <br />
+                                </label> 
+                            )                            
+                        }
                         <br /><br />
 
                         Description <br />
-                        {languagesGlobal.map(langGlob=>(
-                            <label key={langGlob + "-description"}> {langGlob}: 
+                        {
+                        (showMore) ?
+                        (
+                            languagesGlobal.map(langGlob=>(
+                                <label key={langGlob + "add-description-category"}> {langGlob}: 
+                                    <input 
+                                        type="text" 
+                                        id={`add-modal-description-${langGlob}`}
+                                        name={`add-modal-description-${langGlob}`}
+                                        required={true}
+                                    />
+                                    <br />
+                                </label> 
+                            ))
+                        ) :
+                        (
+                            <label> {props.lang}: 
                                 <input 
                                     type="text" 
-                                    id={`add-modal-description-${langGlob}`}
-                                    name={`add-modal-description-${langGlob}`}
+                                    id={`add-modal-description-${props.lang}`}
+                                    name={`add-modal-description-${props.lang}`}
                                     required={true}
                                 />
                                 <br />
                             </label> 
-                        ))}
+                        )
+                        }
                         <br /><br />
 
                         <label htmlFor="add-modal-flag"> Flag </label> <br />                        
@@ -169,7 +202,7 @@ export default function Add(props: {lang: string}){
         >
             {getFromLangAddCategory(props.lang)}
         </Link>
-        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose} /> 
+        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose} lang={props.lang} /> 
     </>
     );
 }
