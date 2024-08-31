@@ -24,7 +24,12 @@ import { Button, Modal } from "react-bootstrap";
 function InitDeleteModal(props: any){
     const router = useRouter();
     return (
-    <Modal show={props.showDelete} onHide={props.handleDeleteClose}>
+    <Modal 
+        show={props.showDelete} 
+        onHide={props.handleDeleteClose}
+        size={undefined}
+        centered
+    >
         <form action="#">
 
             <Modal.Header closeButton>

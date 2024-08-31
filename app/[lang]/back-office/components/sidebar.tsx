@@ -36,6 +36,21 @@ function getFromLangTheCategory(lang: string) : string{
             return "Categories";
     }
 }
+function getFromLangTheCourse(lang: string) : string{
+    switch(lang){
+        case "EN":
+            return "Courses";
+            break;
+        case "FR":
+            return "Cours";
+            break;
+        case "DE":
+            return "Kurse";
+            break;
+        default:
+            return "Courses";
+    }
+}
 
 
 export default function Sidebar(props: {lang: string}) {
@@ -55,7 +70,12 @@ export default function Sidebar(props: {lang: string}) {
             >
                 <span className="h5">{getFromLangTheCategory(props.lang)}</span>
             </Link>
-            
+            <Link
+                className={`btn btn-second px-3 py-2 rounded-0 ${getActive(path, "/" + props.lang + "/back-office/pages/courses")}`}
+                href={ "/" + props.lang + "/back-office/pages/courses" }
+            >
+                <span className="h5">{getFromLangTheCourse(props.lang)}</span>
+            </Link>
         </nav>
     </div>
     );

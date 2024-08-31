@@ -24,7 +24,12 @@ export default function Edit(props: any) {
 function InitEditModal( props: any ){
     const router = useRouter();
     return (
-        <Modal show={props.showEdit} onHide={props.handleEditClose}>
+        <Modal 
+            show={props.showEdit} 
+            onHide={props.handleEditClose}
+            size={undefined}
+            centered
+        >
             <form action="#">
 
                 <Modal.Header closeButton>

@@ -71,14 +71,19 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
     const [showMore, setShowMore] = useState<boolean>(false);
     const router = useRouter();
     return (
-        <Modal show={props.showAdd} onHide={props.handleAddClose}>
+        <Modal
+            show={props.showAdd} 
+            onHide={props.handleAddClose}
+            size={undefined}
+            centered
+        >
             <form action="#">
 
                 <Modal.Header closeButton>
                     <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>                        
+                <Modal.Body>
                     <div className="modal-body">
                         <label htmlFor="add-modal-code"> Code </label> <br />
                         <input type="text" id="add-modal-code" name="add-modal-code" required />
@@ -89,28 +94,28 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
                             (showMore) ?
                             (
                                 languagesGlobal.map(langGlob=>(
-                                    <label key={langGlob + "add-title-category"}> {langGlob}: 
-                                        <input 
-                                            type="text" 
+                                    <label key={langGlob + "add-title-category"}> {langGlob}:
+                                        <input
+                                            type="text"
                                             id={`add-modal-title-${langGlob}`}
                                             name={`add-modal-title-${langGlob}`}
                                             required={true}
                                         />
                                         <br />
-                                    </label> 
+                                    </label>
                                 ))
                             ) :
                             (
-                                <label> {props.lang}: 
-                                    <input 
-                                        type="text" 
+                                <label> {props.lang}:
+                                    <input
+                                        type="text"
                                         id={`add-modal-title-${props.lang}`}
                                         name={`add-modal-title-${props.lang}`}
                                         required={true}
                                     />
                                     <br />
-                                </label> 
-                            )                            
+                                </label>
+                            )
                         }
                         <br /><br />
 
@@ -119,21 +124,21 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
                         (showMore) ?
                         (
                             languagesGlobal.map(langGlob=>(
-                                <label key={langGlob + "add-description-category"}> {langGlob}: 
-                                    <input 
-                                        type="text" 
+                                <label key={langGlob + "add-description-category"}> {langGlob}:
+                                    <input
+                                        type="text"
                                         id={`add-modal-description-${langGlob}`}
                                         name={`add-modal-description-${langGlob}`}
                                         required={true}
                                     />
                                     <br />
-                                </label> 
+                                </label>
                             ))
                         ) :
                         (
-                            <label> {props.lang}: 
-                                <input 
-                                    type="text" 
+                            <label> {props.lang}:
+                                <input
+                                    type="text"
                                     id={`add-modal-description-${props.lang}`}
                                     name={`add-modal-description-${props.lang}`}
                                     required={true}
@@ -160,7 +165,12 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick={(e)=> addSend(e, router, props.handleAddClose)} variant="primary">Save changes</Button>
+                    <Button 
+                        onClick={(e)=>addSend(e, router, props.handleAddClose)} 
+                        variant="primary"
+                    >
+                        Save changes
+                    </Button>
                 </Modal.Footer>
             </form>
         </Modal>

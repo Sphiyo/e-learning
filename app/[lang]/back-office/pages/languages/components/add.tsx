@@ -66,7 +66,12 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
 function InitAddModal(props: {showAdd: any, handleAddClose: any}){
     const router = useRouter();
     return (
-        <Modal show={props.showAdd} onHide={props.handleAddClose}>
+        <Modal 
+            show={props.showAdd} 
+            onHide={props.handleAddClose}
+            size={undefined}
+            centered
+        >
             <form action="#">
                 <Modal.Header closeButton>
                     <Modal.Title>Add Language</Modal.Title>

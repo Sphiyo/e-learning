@@ -3,16 +3,10 @@ import Edit from "./edit";
 import Delete from "./delete";
 import {Button} from "react-bootstrap";
 import {useState} from "react";
+import {LanguageType} from "@/app/[lang]/back-office/utils/types";
 
 interface Context {
-    languages: {
-        code: string;
-        name: Object;
-        flag: string;
-        published: boolean;
-        createdDate: string;
-        modifiedDate: string;       
-    }[];
+    languages: LanguageType[];
     lang: string;
 }
 
@@ -138,7 +132,7 @@ export default function List(props: Context) {
             </thead>
             <tbody>
             {
-                props.languages.map(language => (                            
+                props.languages.map((language: LanguageType) => (                            
                     <tr key={language.code}>
                         <td>{language.code}</td>
                         <td>{language.name[props.lang] || language.name["EN"]}</td>
@@ -147,7 +141,7 @@ export default function List(props: Context) {
                             <input
                                 title="published"
                                 type="checkbox"
-                                checked={language.published? true:false}
+                                checked={language.published}
                                 readOnly={true}
                                 disabled={true}
                             />

@@ -1,19 +1,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+import { LanguageType } from "@/app/[lang]/back-office/utils/types";
 
-export interface Localisation {
-    language: {
-        code: string;
-        name: {code: string},
-        flag: string;
-        published: boolean;
-        createdDate: string;
-        modifiedDate: string;
-    }; 
-}
 
-const data = { languages: [
+
+
+
+
+
+const data: {languages: LanguageType[]} = { languages: [
     {
         "code": "FR",
         "name": { "EN": "French" , "FR": "Français", "DE": "Französisch" },
@@ -68,11 +64,11 @@ export async function POST(req: NextRequest) {
     if( Found ){
         return NextResponse.json({message: "Post Failed: Already in"});
     }
-    const newLanguage = {
+    const newLanguage: LanguageType = {
         code: body["code"],
         name: body["name"],
         flag: body["flag"],
-        published: body["published"] ? true: false,
+        published: body["published"],
         createdDate: body["createdDate"],
         modifiedDate: body["modifiedDate"]
     }
@@ -90,14 +86,14 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({message: "Delete Success"});
 }
 export async function PUT(req: NextRequest) {
-    const body = await req.json();
+    const body: LanguageType = await req.json();
     data.languages = data.languages.map( lang=> {
         if(lang.code == body.code) {
             return {
                 "code": body.code,
                 "name": body.name,
                 "flag": body.flag,
-                "published": body.published? true: false,
+                "published": body.published,
                 "createdDate": lang.createdDate,
                 "modifiedDate": body.modifiedDate
             }
