@@ -2,10 +2,10 @@
 import $ from "jquery";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 
 import { Button, Modal } from "react-bootstrap";
-import { SectionType, VideoType } from "../../../utils/types";
+import { SectionType, VideoType } from "../../../../utils/types";
 
 const languagesGlobal = ["EN", "FR", "DE"];
 
@@ -27,8 +27,18 @@ function getFromLangTheActions(lang: string){
 }
 
 
-export default function ShowSection(props: {showSections: any, sections:any, handleSectionsClose:any, lang: string}) {
-  const router = useRouter();
+export default function ShowSection(props: {
+      showSections: any, 
+      sections: any, 
+      handleSectionsClose: any, 
+      lang: string,
+    }
+  ) 
+  {
+
+    const router = useRouter();
+
+
   return (
     <Modal 
       show={props.showSections} 
@@ -66,8 +76,25 @@ export default function ShowSection(props: {showSections: any, sections:any, han
                     <td>{video.title[props.lang] || video.title["EN"]}</td>
                     <td>{video.url}</td>
                     <td>
-                      <Button>Edit</Button>
-                      <Button>Delete</Button>
+                    <Button 
+                                variant="primary" 
+                                onClick={()=> {
+                                    props.setSections(props.sections); 
+                                    setShowEdit(true)
+                                }}
+                            >
+                                Edit
+                            </Button>
+                            {" "}
+                            <Button 
+                                variant="primary" 
+                                onClick={()=>{ 
+                                    set(course); 
+                                    setShowDelete(true);
+                                }}
+                            >
+                                Delete
+                            </Button>
                     </td>
                   </tr>
                 )))

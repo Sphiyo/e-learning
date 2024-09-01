@@ -2,7 +2,7 @@
 import {Button} from "react-bootstrap";
 import {useState} from "react";
 import {CourseType, SectionType, VideoType} from "@/app/[lang]/back-office/utils/types";
-import ShowSection from "./sections";
+import ShowSection from "./sections/list";
 
 interface Context {
     courses: CourseType[];
@@ -271,6 +271,7 @@ export default function List(props: Context) {
         <ShowSection 
             showSections={showSections} 
             sections={sections} 
+            setSections={setSections} 
             handleSectionsClose={handleSectionsClose} 
             lang={props.lang} 
         />
