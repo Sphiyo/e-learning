@@ -71,7 +71,12 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
     const [showMore, setShowMore] = useState<boolean>(false);
     const router = useRouter();
     return (
-        <Modal show={props.showAdd} onHide={props.handleAddClose}>
+        <Modal 
+            show={props.showAdd} 
+            onHide={props.handleAddClose}
+            centered={true}
+            size="xl"
+        >
             <form action="#">
 
                 <Modal.Header closeButton>

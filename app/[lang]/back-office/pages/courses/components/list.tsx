@@ -3,6 +3,7 @@ import {Button} from "react-bootstrap";
 import {useState} from "react";
 import {CourseType, SectionType, VideoType} from "@/app/[lang]/back-office/utils/types";
 import ShowSection from "./sections/list";
+import Edit from "./edit";
 
 interface Context {
     courses: CourseType[];
@@ -274,7 +275,13 @@ export default function List(props: Context) {
             handleSectionsClose={handleSectionsClose} 
             lang={props.lang} 
         />
-        {/* <Edit showEdit={showEdit} course={course} handleEditClose={handleEditClose} lang={props.lang} />
+        <Edit
+            showEdit={showEdit} 
+            course={course} 
+            handleEditClose={handleEditClose} 
+            lang={props.lang} 
+        />
+        {/* 
         <Delete showDelete={showDelete} course={course} handleDeleteClose={handleDeleteClose} lang={props.lang} /> */}
 
         <table className="table table-secondary text-center">
