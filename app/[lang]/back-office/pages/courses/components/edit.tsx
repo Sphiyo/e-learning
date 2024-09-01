@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
 
 import { Button, Modal } from "react-bootstrap";
+import { CourseType, SectionType } from "../../../utils/types";
 
 const languagesGlobal = ["EN", "FR", "DE"];
 
@@ -21,93 +22,200 @@ export default function Edit(props: any) {
     );
 }
 
-function InitEditModal( props: any ){
-    const router = useRouter();
-    return (
-        <Modal 
-            show={props.showEdit} 
-            onHide={props.handleEditClose}
-            size="xl"
-            centered
-        >
-            <form action="#">
+function InitEditModal( props: {
+    showEdit: any, 
+    course: CourseType,
+    handleEditClose: any,
+    lang: string 
+  })
+{
+  const router = useRouter();
+  return (
+    <Modal 
+        show={props.showEdit} 
+        onHide={props.handleEditClose}
+        size="xl"
+        centered
+    >
+      <form action="#">
 
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit Category</Modal.Title>
-                </Modal.Header>
+        <Modal.Header closeButton>
+            <Modal.Title>Edit </Modal.Title>
+        </Modal.Header>
 
-                <Modal.Body>
-                    <label htmlFor="edit-modal-code"> Code </label> <br />
-                    <input 
-                        type="text" 
-                        id="edit-modal-code" 
-                        name="edit-modal-code" 
-                        defaultValue={props.category.code} 
-                        readOnly={true} 
-                        required={true} 
-                    />
-                    <br />
-                    <br />
-
-                    Title <br />
-                    {languagesGlobal.map(langGlob=>( 
-                        <label key={langGlob}> {langGlob}: 
-                            <input 
-                                type="text" 
-                                id={`edit-modal-title-${langGlob}`} 
-                                name={`edit-modal-title-${langGlob}`} 
-                                defaultValue={props.category?.title?.[langGlob]} 
-                                required={true} 
-                            /> 
-                            <br /> 
-                        </label> 
-                    ))}
-                    <br /> 
-                    <br /> 
-
-                    Description <br />
-                    {languagesGlobal.map(langGlob=>( 
-                        <label key={langGlob}> {langGlob}: 
-                            <input 
-                                type="text" 
-                                id={`edit-modal-description-${langGlob}`} 
-                                name={`edit-modal-description-${langGlob}`} 
-                                defaultValue={props.category?.description?.[langGlob] || ""} 
-                                required={true} 
-                            /> 
-                            <br /> 
-                        </label> 
-                    ))}
+        <Modal.Body>
+          <div className="row">
 
 
-                    <br />
-                    <br /> 
-                    <label htmlFor="edit-modal-published"> Published </label> <br />
-                    <input
-                        type="checkbox" 
-                        id="edit-modal-published" 
-                        name="edit-modal-published" 
-                        defaultChecked={props.category.published} 
-                    />
-                    <br />
-                    <br /> 
-                    <label htmlFor="edit-modal-displayAtHome"> Display At Home </label> <br />
-                    <input 
-                        type="checkbox" 
-                        id="edit-modal-displayAtHome" 
-                        name="edit-modal-displayAtHome" 
-                        defaultChecked={props.category.displayAtHome} 
-                    />
-                    <br /> 
-                    <br />
-                </Modal.Body>
+            <div className="col-4">
+              <label htmlFor="edit-modal-code"> Code </label> <br />
+              <input 
+                  type="text" 
+                  id="edit-modal-code" 
+                  name="edit-modal-code" 
+                  defaultValue={props.course?.code} 
+                  readOnly={true} 
+                  required={true} 
+              />
+            </div>
 
-                <Modal.Footer>
-                    <Button onClick={(e)=> editSend(e, router, props.handleEditClose)} variant="primary">Save changes</Button>
-                </Modal.Footer>
-            </form>
-        </Modal>
-    );
+
+            <div className="col-4">
+              <p>Title</p> 
+              {languagesGlobal.map(langGlob=>( 
+                  <label key={langGlob}> {langGlob}: 
+                      <input 
+                          type="text" 
+                          id={`edit-modal-title-${langGlob}`} 
+                          name={`edit-modal-title-${langGlob}`} 
+                          defaultValue={props.course?.title?.[langGlob]} 
+                          required={true} 
+                      /> 
+                      
+                  </label> 
+              ))}
+            </div>
+
+
+            <div className="col-4">
+              <p>Description</p>
+              {languagesGlobal.map(langGlob=>( 
+                  <label key={langGlob}> {langGlob}: 
+                      <input 
+                          type="text" 
+                          id={`edit-modal-description-${langGlob}`} 
+                          name={`edit-modal-description-${langGlob}`} 
+                          defaultValue={props.course?.description?.[langGlob] || ""} 
+                          required={true} 
+                      /> 
+                  </label> 
+              ))}
+            </div>
+
+          </div>
+          <div className="row">
+
+            <div className="col-4">
+            
+              <label htmlFor="edit-modal-published"> Total Item </label> <br />
+              <input
+                  type="number" 
+                  id="edit-modal-published" 
+                  name="edit-modal-published" 
+                  defaultValue={props.course?.totalItem} 
+              />
+            </div>
+
+            <div className="col-4">
+              <label htmlFor="edit-modal-published"> Duration </label> <br />
+              <input
+                  type="text" 
+                  id="edit-modal-published" 
+                  name="edit-modal-published" 
+                  defaultValue={props.course?.duration} 
+              />
+            </div>
+
+            <div className="col-4">
+              <label htmlFor="edit-modal-published"> Image </label> <br />
+              <input
+                  type="text" 
+                  id="edit-modal-published" 
+                  name="edit-modal-published" 
+                  defaultValue={props.course?.image} 
+              />
+            </div>
+
+          </div>
+
+          
+          <div className="row">
+            
+            <div className="col-4">
+              <label htmlFor="edit-modal-published"> Video </label> <br />
+              <input
+                  type="text" 
+                  id="edit-modal-published" 
+                  name="edit-modal-published" 
+                  defaultValue={props.course?.video} 
+              />
+            </div>  
+
+              
+            <div className="col-4">
+              <label htmlFor="edit-modal-published"> Published </label> <br />
+              <input
+                  type="checkbox" 
+                  id="edit-modal-published" 
+                  name="edit-modal-published" 
+                  defaultChecked={props.course?.published} 
+              />
+            </div>
+
+            <div className="col-4">
+              <label htmlFor="edit-modal-displayAtHome"> Display At Home </label> <br />
+              <input 
+                  type="checkbox" 
+                  id="edit-modal-displayAtHome" 
+                  name="edit-modal-displayAtHome" 
+                  defaultChecked={props.course?.displayAtHome} 
+              />
+            </div>
+
+          </div>
+
+
+          <div className="row">
+            <div className="col-4">
+              <label htmlFor="edit-modal-displayAtHome"> Author </label> <br />
+              <input 
+                  type="text" 
+                  id="edit-modal-displayAtHome" 
+                  name="edit-modal-displayAtHome" 
+                  defaultValue={props.course?.author} 
+              />
+            </div>
+            
+            <div className="col-4">
+              <label htmlFor="edit-modal-displayAtHome"> Category </label> <br />
+              <input 
+                  type="text" 
+                  id="edit-modal-displayAtHome" 
+                  name="edit-modal-displayAtHome" 
+                  defaultValue={props.course?.category} 
+              />
+            </div>
+
+            <div className="col-4">
+              <label htmlFor="edit-modal-displayAtHome"> tags </label> <br />
+              <input 
+                  type="text" 
+                  id="edit-modal-displayAtHome" 
+                  name="edit-modal-displayAtHome" 
+                  defaultValue={props.course?.tags} 
+              />
+            </div>
+            
+          </div>
+
+
+            <label htmlFor="edit-modal-displayAtHome"> Level </label> <br />
+            <input 
+                type="number" 
+                min={0}
+                max={2}
+                id="edit-modal-displayAtHome" 
+                name="edit-modal-displayAtHome" 
+                defaultValue={props.course?.level} 
+            />
+        </Modal.Body>
+
+        <Modal.Footer>
+            <Button onClick={(e)=> editSend(e, router, props.handleEditClose)} variant="primary">Save changes</Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
 }
 async function editSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
     const code = $(`#edit-modal-code`).val();

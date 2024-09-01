@@ -68,108 +68,118 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
 
 
 function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
-    const [showMore, setShowMore] = useState<boolean>(false);
-    const router = useRouter();
-    return (
-        <Modal show={props.showAdd} onHide={props.handleAddClose}>
-            <form action="#">
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const router = useRouter();
+  return (
+    <Modal 
+      show={props.showAdd} 
+      onHide={props.handleAddClose}
+      centered={true}
+      size="xl"
+    >
+      <form action="#">
+        <Modal.Header closeButton>
+          <Modal.Title>Add Category</Modal.Title>
+        </Modal.Header>
 
-                <Modal.Header closeButton>
-                    <Modal.Title>Add Category</Modal.Title>
-                </Modal.Header>
+        <Modal.Body>
+          <div className="modal-body">
+            <label htmlFor="add-modal-code"> Code </label> <br />
+            <input type="text" id="add-modal-code" name="add-modal-code" required />
+            <br /><br />
+            <button 
+              type="button" 
+              className="btn btn-dark" 
+              onClick={()=>setShowMore(!showMore)}
+            >
+              Show More
+            </button><br />
+            Title <br />
+            {
+              (showMore) ?
+              (
+                languagesGlobal.map(langGlob=>(
+                  <label key={langGlob + "add-title-category"}> {langGlob}:
+                    <input
+                      type="text"
+                      id={`add-modal-title-${langGlob}`}
+                      name={`add-modal-title-${langGlob}`}
+                      required={true}
+                    />
+                    <br />
+                  </label>
+                ))
+              ) :
+              (
+                <label> {props.lang}:
+                  <input
+                    type="text"
+                    id={`add-modal-title-${props.lang}`}
+                    name={`add-modal-title-${props.lang}`}
+                    required={true}
+                  />
+                  <br />
+                </label>
+              )
+            }
+            <br /><br />
 
-                <Modal.Body>
-                    <div className="modal-body">
-                        <label htmlFor="add-modal-code"> Code </label> <br />
-                        <input type="text" id="add-modal-code" name="add-modal-code" required />
-                        <br /><br />
-                        <button type="button" className="btn btn-dark" onClick={()=>setShowMore(!showMore)}>Show More</button><br />
-                        Title <br />
-                        {
-                            (showMore) ?
-                            (
-                                languagesGlobal.map(langGlob=>(
-                                    <label key={langGlob + "add-title-category"}> {langGlob}:
-                                        <input
-                                            type="text"
-                                            id={`add-modal-title-${langGlob}`}
-                                            name={`add-modal-title-${langGlob}`}
-                                            required={true}
-                                        />
-                                        <br />
-                                    </label>
-                                ))
-                            ) :
-                            (
-                                <label> {props.lang}:
-                                    <input
-                                        type="text"
-                                        id={`add-modal-title-${props.lang}`}
-                                        name={`add-modal-title-${props.lang}`}
-                                        required={true}
-                                    />
-                                    <br />
-                                </label>
-                            )
-                        }
-                        <br /><br />
+            Description <br />
+            {
+            (showMore) ?
+            (
+              languagesGlobal.map(langGlob=>(
+                <label key={langGlob + "add-description-category"}> {langGlob}:
+                  <input
+                    type="text"
+                    id={`add-modal-description-${langGlob}`}
+                    name={`add-modal-description-${langGlob}`}
+                    required={true}
+                  />
+                  <br />
+                </label>
+              ))
+            ) :
+            (
+              <label> {props.lang}:
+                <input
+                  type="text"
+                  id={`add-modal-description-${props.lang}`}
+                  name={`add-modal-description-${props.lang}`}
+                  required={true}
+                />
+                <br />
+              </label> 
+            )
+            }
+            <br /><br />
 
-                        Description <br />
-                        {
-                        (showMore) ?
-                        (
-                            languagesGlobal.map(langGlob=>(
-                                <label key={langGlob + "add-description-category"}> {langGlob}:
-                                    <input
-                                        type="text"
-                                        id={`add-modal-description-${langGlob}`}
-                                        name={`add-modal-description-${langGlob}`}
-                                        required={true}
-                                    />
-                                    <br />
-                                </label>
-                            ))
-                        ) :
-                        (
-                            <label> {props.lang}:
-                                <input
-                                    type="text"
-                                    id={`add-modal-description-${props.lang}`}
-                                    name={`add-modal-description-${props.lang}`}
-                                    required={true}
-                                />
-                                <br />
-                            </label> 
-                        )
-                        }
-                        <br /><br />
+            <label htmlFor="add-modal-flag"> Flag </label> <br />                        
+            <input type="text" id="add-modal-flag" name="add-modal-flag" required />
 
-                        <label htmlFor="add-modal-flag"> Flag </label> <br />                        
-                        <input type="text" id="add-modal-flag" name="add-modal-flag" required />
+            <br /><br />
 
-                        <br /><br />
+            <label htmlFor="add-modal-published"> Published </label> 
+            <br />
+            <input type="checkbox" id="add-modal-published" name="add-modal-published" />
+            <br />
+            
+            <label htmlFor="add-modal-displayAtHome"> Display At Home </label> <br />
+            <input type="checkbox" id="add-modal-displayAtHome" name="add-modal-displayAtHome" /><br />
+          </div> 
+        </Modal.Body>
 
-                        <label htmlFor="add-modal-published"> Published </label> 
-                        <br />
-                        <input type="checkbox" id="add-modal-published" name="add-modal-published" />
-                        <br />
-                        
-                        <label htmlFor="add-modal-displayAtHome"> Display At Home </label> <br />
-                        <input type="checkbox" id="add-modal-displayAtHome" name="add-modal-displayAtHome" /><br />
-                    </div> 
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button 
-                        onClick={(e)=>addSend(e, router, props.handleAddClose)} 
-                        variant="primary"
-                    >
-                        Save changes
-                    </Button>
-                </Modal.Footer>
-            </form>
-        </Modal>
-    );
+        <Modal.Footer>
+          <Button 
+            onClick={(e)=>addSend(e, router, props.handleAddClose)} 
+            variant="primary"
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
 }
 
 

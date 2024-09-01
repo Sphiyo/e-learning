@@ -3,7 +3,6 @@ import List from "./components/list";
 
 
 
-
 export default async function CategoryPage({params, searchParams}: {params: {lang: string}, searchParams: any}){
     const langFound = ["EN", "FR", "DE"].includes(params.lang);
     let langToQuery = params.lang;
