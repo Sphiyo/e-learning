@@ -271,7 +271,6 @@ export default function List(props: Context) {
         <ShowSection 
             showSections={showSections} 
             sections={sections} 
-            setSections={setSections} 
             handleSectionsClose={handleSectionsClose} 
             lang={props.lang} 
         />
