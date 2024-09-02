@@ -5,6 +5,7 @@ import $ from "jquery";
 import { useRouter } from "next/navigation";
 import { Button, Modal } from "react-bootstrap";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import CourseModal from "./CourseModal";
 
 const languagesGlobal = ["EN", "FR", "DE"];
 
@@ -180,19 +181,19 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
 
 
 
-function getFromLangAddCategory(lang: string){
+function getFromLangAddCourses(lang: string){
     switch(lang){
         case "EN":
-            return "Add category";
+            return "Add Course";
             break;
         case "FR":
-            return "Ajouter une catégorie";
+            return "Ajouter un cours";
             break;
         case "DE":
-            return "Kategorie hinzufügen";
+            return "Kurs hinzufügen";
             break;
         default:
-            return "Add category";
+            return "Add Course";
     }
 }
 
@@ -210,9 +211,9 @@ export default function Add(props: {lang: string}){
             onClick={handleAddOpen} 
             className="btn btn-primary"
         >
-            {getFromLangAddCategory(props.lang)}
+            {getFromLangAddCourses(props.lang)}
         </Link>
-        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose} lang={props.lang} /> 
+        <CourseModal showAdd={showAdd} handleAddClose={handleAddClose} lang={props.lang} />
     </>
     );
 }

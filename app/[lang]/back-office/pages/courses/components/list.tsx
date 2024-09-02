@@ -1,9 +1,10 @@
 "use client";
-import {Button} from "react-bootstrap";
-import {useState} from "react";
+import {Button, Modal} from "react-bootstrap";
+import {ReactNode, useState} from "react";
 import {CourseType, SectionType, VideoType} from "@/app/[lang]/back-office/utils/types";
 import ShowSection from "./sections/list";
 import Edit from "./edit";
+import CourseModal from "./CourseModal";
 
 interface Context {
     courses: CourseType[];
@@ -263,12 +264,14 @@ export default function List(props: Context) {
     const handleEditClose = () => setShowEdit(false);
     const handleEditShow = () => setShowEdit(true);
 
+
     const [showDelete, setShowDelete] = useState(false);
     const handleDeleteClose = () => setShowDelete(false);
     const handleDeleteShow = () => setShowDelete(true);
 
     return (
     <>
+        {/* <CourseModal /> */}
         <ShowSection 
             showSections={showSections} 
             sections={sections} 
