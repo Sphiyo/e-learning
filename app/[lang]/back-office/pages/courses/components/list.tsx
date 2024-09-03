@@ -1,8 +1,8 @@
 "use client";
 import {Button, Modal} from "react-bootstrap";
-import {ReactNode, useState} from "react";
+import {Dispatch, ReactNode, SetStateAction, useState} from "react";
 import {CourseType, SectionType, VideoType} from "@/app/[lang]/back-office/utils/types";
-import ShowSection from "./sections/list";
+import SectionModal from "./sections/list";
 import Edit from "./edit";
 import CourseModal from "./CourseModal";
 
@@ -272,51 +272,86 @@ export default function List(props: Context) {
     return (
     <>
         {/* <CourseModal /> */}
-        <ShowSection 
+        <SectionModal 
             showSections={showSections} 
             sections={sections} 
             handleSectionsClose={handleSectionsClose} 
             lang={props.lang} 
         />
-        <Edit
-            showEdit={showEdit} 
-            course={course} 
-            handleEditClose={handleEditClose} 
-            lang={props.lang} 
+        <CourseModal 
+            show={showEdit} 
+            handleAddClose={handleEditClose} 
+            lang={props.lang}
+            title="Edit"
+            course={course}
         />
         {/* 
         <Delete showDelete={showDelete} course={course} handleDeleteClose={handleDeleteClose} lang={props.lang} /> */}
+        
+        
+        <CourseTable 
+            courses={props.courses} 
+            lang={props.lang} 
+            setCourse={setCourse} 
+            setSections={setSections} 
+            setShowEdit={setShowEdit}
+            setShowDelete={setShowDelete}
+            setShowSections={setShowSections}
+        /> 
+    </>
+    );
+}
 
+
+function CourseTable({ 
+    lang, 
+    courses, 
+    setSections,
+    setShowSections,
+    setCourse,
+    setShowEdit,
+    setShowDelete
+} :
+{
+    lang: string, 
+    courses: CourseType[], 
+    setSections: Dispatch<any>,
+    setShowSections: Dispatch<SetStateAction<boolean>>,
+    setCourse: Dispatch<any>,
+    setShowEdit: Dispatch<SetStateAction<boolean>>,
+    setShowDelete: Dispatch<SetStateAction<boolean>>,
+}){
+    return (
         <table className="table table-secondary text-center">
             <thead className="table-dark">
                 <tr> 
                     <th className="text-nowrap">Code</th>
-                    <th className="text-nowrap">{getFromLangTheTitle(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheDescription(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheTotalItem(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheDuration(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheImage(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheVideo(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangThePublished(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheDateAdded(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheDateUpdated(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheDisplayHome(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheAuthor(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheCategory(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheTags(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheLevel(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheSections(props.lang)}</th>
-                    <th className="text-nowrap">{getFromLangTheActions(props.lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheTitle(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheDescription(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheTotalItem(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheDuration(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheImage(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheVideo(lang)}</th>
+                    <th className="text-nowrap">{getFromLangThePublished(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheDateAdded(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheDateUpdated(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheDisplayHome(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheAuthor(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheCategory(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheTags(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheLevel(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheSections(lang)}</th>
+                    <th className="text-nowrap">{getFromLangTheActions(lang)}</th>
                 </tr>
             </thead>
             <tbody>
             {
-                props.courses.map((course: CourseType) => (
+                courses.map((course: CourseType) => (
                 <>
                     <tr key={course.code}>
                         <td>{course.code}</td>
-                        <td>{course.title[props.lang] || course.title["EN"]}</td>
-                        <td>{course.description[props.lang] || course.description["EN"]}</td>
+                        <td>{course.title?.[lang] || course.title?.["EN"]}</td>
+                        <td>{course.description?.[lang] || course.description?.["EN"]}</td>
                         <td>{course.totalItem}</td>
                         <td>{course.duration}</td>
                         <td>{course.image}</td>
@@ -382,6 +417,5 @@ export default function List(props: Context) {
             }
             </tbody>
         </table>
-    </>
     );
 }

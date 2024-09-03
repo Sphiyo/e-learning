@@ -2,10 +2,12 @@
 import $ from "jquery";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 
 import { Button, Modal } from "react-bootstrap";
 import { SectionType, VideoType } from "../../../../utils/types";
+import Link from "next/link";
+import { LabeledInput } from "../CourseModal";
 
 const languagesGlobal = ["EN", "FR", "DE"];
 
@@ -27,18 +29,127 @@ function getFromLangTheActions(lang: string){
 }
 
 
-export default function ShowSection(props: {
-      showSections: any, 
-      sections: any, 
-      handleSectionsClose: any, 
-      lang: string,
-    }
-  ) 
-  {
+function AddVideo(props: any){
 
-    const router = useRouter();
+  const [showAdd, setShowAdd] = useState(false);
+  const handleAddOpen = () => setShowAdd(true);
+  const handleAddClose = () => setShowAdd(false);
 
+  return (
+  <>
+      <Link 
+          href="#" 
+          onClick={handleAddOpen} 
+          className="btn btn-primary"
+      >
+          Add Video
+      </Link>
+      <AddVideoModal 
+      />
+  </>
+  );
+}
+function AddVideoModal(){
+  return (<></>);
+}
 
+function AddSection(props: any){
+  const [showAdd, setShowAdd] = useState(false);
+  const handleAddOpen = () => setShowAdd(true);
+  const handleAddClose = () => setShowAdd(false);
+
+  return (
+  <>
+      <Link 
+          href="#" 
+          onClick={handleAddOpen} 
+          className="btn btn-primary"
+      >
+          Add Section
+      </Link>
+      <AddSectionModal 
+        show={showAdd}
+        handleAddClose={handleAddClose}
+      />
+  </>
+  );
+}
+
+function AddSectionModal(props: any){
+  return (
+    <Modal 
+      show={props.show} 
+      onHide={props.handleAddClose}
+      size="xl"
+      centered
+    >
+      <form action="#">
+        <Modal.Header closeButton>
+          <Modal.Title>Add Section</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <LabeledInput defaultValue="" inputName="add-section-title">
+            Section Title:
+          </LabeledInput>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button 
+            onClick={props.handleAddClose} 
+            variant="primary"
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
+}
+
+function EditSectionModal(props: any){
+  return (
+    <Modal 
+      show={props.show} 
+      onHide={props.onHide}
+      size="xl"
+      centered
+    >
+      <form action="#">
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Section</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <LabeledInput defaultValue="" inputName="edit-section-title">
+            Section Title:
+          </LabeledInput>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button 
+            onClick={props.onHide} 
+            variant="primary"
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
+}
+
+export default function SectionModal(props: {
+    showSections: any, 
+    sections: any, 
+    handleSectionsClose: any, 
+    lang: string,
+  }
+) 
+{
+  const [showEdit, setShowEdit] = useState(false);
+  
+  const router = useRouter();
   return (
     <Modal 
       show={props.showSections} 
@@ -49,60 +160,19 @@ export default function ShowSection(props: {
       <form action="#">
 
         <Modal.Header closeButton>
-            <Modal.Title>Sections</Modal.Title>
+          <Modal.Title>Sections</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <table className="table table-secondary text-center">
-            <thead className="table-dark">
-              <tr> 
-                <th className="text-nowrap">Section Id</th>
-                <th className="text-nowrap">Section Title</th>
-                <th className="text-nowrap">Video Id</th>
-                <th className="text-nowrap">Video Title</th>
-                <th className="text-nowrap">Video URL</th>
-                <th className="text-nowrap">{getFromLangTheActions(props.lang)}</th>
-              </tr>
-            </thead>
-            <tbody style={{verticalAlign: "middle"}}>
-            {
-              props.sections?.map?.((section: SectionType) => (  
-                section.videos.map(((video: VideoType, index: number)=>(  
-                  <tr key={section.id}>
-                    {index == 0 && <td rowSpan={section.videos.length}>{section.id}</td>}
-                    {index == 0 && <td rowSpan={section.videos.length}>{section.title[props.lang] || section.title["EN"]}</td>}
-
-                    <td>{video.id}</td>
-                    <td>{video.title[props.lang] || video.title["EN"]}</td>
-                    <td>{video.url}</td>
-                    <td>
-                    <Button 
-                                variant="primary" 
-                                onClick={()=> {
-                                    props.setSections(props.sections); 
-                                    setShowEdit(true)
-                                }}
-                            >
-                                Edit
-                            </Button>
-                            {" "}
-                            <Button 
-                                variant="primary" 
-                                onClick={()=>{ 
-                                    set(course); 
-                                    setShowDelete(true);
-                                }}
-                            >
-                                Delete
-                            </Button>
-                    </td>
-                  </tr>
-                )))
-              ))
-            }
-            
-            </tbody>
-          </table>
+          <AddVideo />
+          <AddSection />
+          
+          <SectionTable
+            sections={props.sections}
+            lang={props.lang}
+            setShowEdit={setShowEdit}
+            showEdit={showEdit}
+          />
         </Modal.Body>
 
         <Modal.Footer>
@@ -118,45 +188,88 @@ export default function ShowSection(props: {
   );
 }
 
-
-// async function editSend(event: MouseEvent, router: AppRouterInstance, handleEditClose: any){
-//     const code = $(`#edit-modal-code`).val();
-//     const title: any = {}; 
-//     const description: any = {}; 
-//     for( let langGlob of languagesGlobal ) {
-//         title[langGlob] =  $(`#edit-modal-title-${langGlob}`).val();
-//         description[langGlob] =  $(`#edit-modal-description-${langGlob}`).val();
-//     }
-//     const published = $(`#edit-modal-published`).is(':checked');
-
-//     const displayAtHome =  $(`#edit-modal-displayAtHome`).is(':checked');
-
-//     const modifiedDate = new Date();
-    
-//     const day = modifiedDate.getDate();
-//     const month = modifiedDate.getMonth() + 1;
-//     const year = modifiedDate.getFullYear();
-
-//     const dayStr =String(day).padStart(2, '0');
-//     const monthStr =String(month).padStart(2, '0');
-//     const yearStr =String(year).padStart(4, '0');
-//     const inpDate = `${yearStr}-${monthStr}-${dayStr}`;
-
-//     const data = {
-//         code : code,
-//         title : title,
-//         description : description,
-//         published : published ? true : false,
-//         modifiedDate : inpDate,
-//         displayAtHome: displayAtHome,
-//     }
-//     await fetch(
-//         `http://localhost:3000/api/categories/`, {
-//             method: "PUT",
-//             cache: 'no-store',
-//             body: JSON.stringify(data)
-//         }
-//     );   
-//     handleEditClose();
-//     router.refresh();
-// }
+function SectionTable({
+  lang,
+  sections,
+  setSections,
+  showEdit,
+  setShowEdit,
+  setCourse,
+  setShowDelete,
+}: 
+{
+  lang: string,
+  sections: SectionType[],
+  setSections: Dispatch<any>,
+  showEdit: boolean,
+  setShowEdit: Dispatch<SetStateAction<boolean>>,
+  setCourse: Dispatch<any>,
+  setShowDelete: Dispatch<SetStateAction<boolean>>,
+})
+{
+  return (
+  <>
+    <EditSectionModal show={showEdit} onHide={()=>setShowEdit(false)} />
+    <table className="table table-secondary text-center">
+      <thead className="table-dark">
+        <tr> 
+          <th className="text-nowrap">Section Id</th>
+          <th className="text-nowrap">Section Title</th>
+          <th className="text-nowrap">Video Id</th>
+          <th className="text-nowrap">Video Title</th>
+          <th className="text-nowrap">Video URL</th>
+          <th className="text-nowrap">{getFromLangTheActions(lang)}</th>
+          <th className="text-nowrap">{getFromLangTheActions(lang)}</th>
+        </tr>
+      </thead>
+      <tbody style={{verticalAlign: "middle"}}>
+      {
+        sections?.map?.((section: SectionType) => (  
+          section.videos.map(((video: VideoType, index: number)=>(  
+            <tr key={section.id}>
+              {index == 0 && <td rowSpan={section.videos.length}>{section.id}</td>}
+              {index == 0 && <td rowSpan={section.videos.length}>{section.title[lang] || section.title["EN"]}</td>}
+              <td>{video.id}</td>
+              <td>{video.title?.[lang] || video.title?.["EN"]}</td>
+              <td>{video.url}</td>
+              <td>
+                <Button 
+                  variant="primary" 
+                  onClick={()=> {
+                  // setSections(sections); 
+                  // setShowEdit(true)
+                  }}
+                >
+                    Edit
+                </Button>
+                {" "}
+                <Button 
+                  variant="primary" 
+                  onClick={()=>{ 
+                  // setCourse(course); 
+                  // setShowDelete(true);
+                  }}
+                >
+                  Delete
+                </Button>
+              </td>
+              <td>
+                <Button 
+                  variant="primary" 
+                  onClick={()=> {
+                    // setSections(sections); 
+                    setShowEdit(true);
+                  }}
+                >
+                  Edit Section
+                </Button>
+              </td>
+            </tr>
+          )))
+        ))
+      }      
+      </tbody>
+    </table>
+  </>
+  );
+}

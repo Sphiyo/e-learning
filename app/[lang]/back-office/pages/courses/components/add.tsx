@@ -213,7 +213,12 @@ export default function Add(props: {lang: string}){
         >
             {getFromLangAddCourses(props.lang)}
         </Link>
-        <CourseModal showAdd={showAdd} handleAddClose={handleAddClose} lang={props.lang} />
+        <CourseModal 
+            show={showAdd}
+            handleAddClose={handleAddClose}
+            lang={props.lang}
+            title="Add Course"
+        />
     </>
     );
 }
