@@ -30,7 +30,6 @@ function getFromLangTheActions(lang: string){
 
 
 function AddVideo(props: any){
-
   const [showAdd, setShowAdd] = useState(false);
   const handleAddOpen = () => setShowAdd(true);
   const handleAddClose = () => setShowAdd(false);
@@ -45,12 +44,45 @@ function AddVideo(props: any){
           Add Video
       </Link>
       <AddVideoModal 
+        show={showAdd}
+        handleAddClose={handleAddClose}
       />
   </>
   );
 }
-function AddVideoModal(){
-  return (<></>);
+function AddVideoModal(props: any){
+  return (
+    <Modal 
+      show={props.show} 
+      onHide={props.handleAddClose} 
+      size="xl" 
+      centered 
+    > 
+      <form action="#"> 
+        <Modal.Header closeButton> 
+          <Modal.Title>Add Video</Modal.Title> 
+        </Modal.Header> 
+
+        <Modal.Body> 
+          <LabeledInput 
+            defaultValue="" 
+            inputName="add-video-title"
+          > 
+            Video Title: 
+          </LabeledInput> 
+        </Modal.Body> 
+
+        <Modal.Footer>
+          <Button 
+            onClick={props.handleAddClose} 
+            variant="primary"
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
 }
 
 function AddSection(props: any){
@@ -77,8 +109,8 @@ function AddSection(props: any){
 
 function AddSectionModal(props: any){
   return (
-    <Modal 
-      show={props.show} 
+    <Modal
+      show={props.show}
       onHide={props.handleAddClose}
       size="xl"
       centered
@@ -119,16 +151,16 @@ function EditSectionModal(props: any){
         <Modal.Header closeButton>
           <Modal.Title>Edit Section</Modal.Title>
         </Modal.Header>
-
+        
         <Modal.Body>
-          <LabeledInput defaultValue="" inputName="edit-section-title">
+          <LabeledInput defaultValue={props.section?.title["EN"]} inputName="edit-section-title">
             Section Title:
           </LabeledInput>
         </Modal.Body>
 
         <Modal.Footer>
           <Button 
-            onClick={props.onHide} 
+            onClick={props.onHide}
             variant="primary"
           >
             Save changes
@@ -207,9 +239,14 @@ function SectionTable({
   setShowDelete: Dispatch<SetStateAction<boolean>>,
 })
 {
+  const [section, setSection] = useState<SectionType| null>(null)
   return (
   <>
-    <EditSectionModal show={showEdit} onHide={()=>setShowEdit(false)} />
+    <EditSectionModal 
+      show={showEdit} 
+      onHide={()=>setShowEdit(false)}
+      section={section}
+    />
     <table className="table table-secondary text-center">
       <thead className="table-dark">
         <tr> 
@@ -224,19 +261,19 @@ function SectionTable({
       </thead>
       <tbody style={{verticalAlign: "middle"}}>
       {
-        sections?.map?.((section: SectionType) => (  
-          section.videos.map(((video: VideoType, index: number)=>(  
+        sections?.map?.((section: SectionType, indexSection: number, sectionArray: SectionType[]) => (  
+          section.videos.map(((video: VideoType, indexVideo: number, videoArray: VideoType[])=>(  
             <tr key={section.id}>
-              {index == 0 && <td rowSpan={section.videos.length}>{section.id}</td>}
-              {index == 0 && <td rowSpan={section.videos.length}>{section.title[lang] || section.title["EN"]}</td>}
+              {indexVideo == 0 && <td rowSpan={section.videos.length}>{section.id}</td>}
+              {indexVideo == 0 && <td rowSpan={section.videos.length}>{section.title[lang] || section.title["EN"]}</td>}
               <td>{video.id}</td>
               <td>{video.title?.[lang] || video.title?.["EN"]}</td>
               <td>{video.url}</td>
+             
               <td>
                 <Button 
                   variant="primary" 
                   onClick={()=> {
-                  // setSections(sections); 
                   // setShowEdit(true)
                   }}
                 >
@@ -252,11 +289,13 @@ function SectionTable({
                 >
                   Delete
                 </Button>
-              </td>
-              <td>
+              </td >
+              { (indexVideo === 0) && <> 
+              <td rowSpan={videoArray.length}>
                 <Button 
                   variant="primary" 
                   onClick={()=> {
+                    setSection(section); 
                     // setSections(sections); 
                     setShowEdit(true);
                   }}
@@ -264,6 +303,8 @@ function SectionTable({
                   Edit Section
                 </Button>
               </td>
+              </>
+              }
             </tr>
           )))
         ))
