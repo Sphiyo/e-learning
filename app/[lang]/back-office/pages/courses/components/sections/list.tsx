@@ -69,6 +69,12 @@ function AddVideoModal(props: any){
             inputName="add-video-title"
           > 
             Video Title: 
+          </LabeledInput>  
+          <LabeledInput 
+            defaultValue="" 
+            inputName="add-video-url"
+          > 
+            Video Url: 
           </LabeledInput> 
         </Modal.Body> 
 
@@ -179,7 +185,8 @@ export default function SectionModal(props: {
   }
 ) 
 {
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEditSection, setShowEditSection] = useState(false);
+  const [showEditVideo, setShowEditVideo] = useState(false);
   
   const router = useRouter();
   return (
@@ -202,14 +209,58 @@ export default function SectionModal(props: {
           <SectionTable
             sections={props.sections}
             lang={props.lang}
-            setShowEdit={setShowEdit}
-            showEdit={showEdit}
+            setShowEditSection={setShowEditSection}
+            showEditSection={showEditSection}
+            setShowEditVideo={setShowEditVideo}
+            showEditVideo={showEditVideo}
+
           />
         </Modal.Body>
 
         <Modal.Footer>
           <Button 
-            onClick={(e)=> editSend(e, router, props.handleSectionsClose)} 
+            onClick={(e)=> e/*editSend(e, router, props.handleSectionsClose)*/} 
+            variant="primary"
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+  );
+}
+
+function VideoModal(props: any){
+  return (
+    <Modal 
+      show={props.show} 
+      onHide={props.onHide} 
+      size="xl" 
+      centered 
+    > 
+      <form action="#"> 
+        <Modal.Header closeButton> 
+          <Modal.Title>Edit Video</Modal.Title> 
+        </Modal.Header> 
+
+        <Modal.Body> 
+          <LabeledInput 
+            defaultValue={JSON.stringify(props.video?.title["EN"])}
+            inputName="edit-video-title"
+          > 
+            Video Title: 
+          </LabeledInput> 
+          <LabeledInput 
+            defaultValue="" 
+            inputName="edit-video-url"
+          > 
+            Video Url: 
+          </LabeledInput> 
+        </Modal.Body> 
+
+        <Modal.Footer>
+          <Button 
+            onClick={props.handleAddClose} 
             variant="primary"
           >
             Save changes
@@ -223,29 +274,33 @@ export default function SectionModal(props: {
 function SectionTable({
   lang,
   sections,
-  setSections,
-  showEdit,
-  setShowEdit,
-  setCourse,
-  setShowDelete,
+  showEditSection,
+  setShowEditSection,
+  showEditVideo,
+  setShowEditVideo,
 }: 
 {
   lang: string,
   sections: SectionType[],
-  setSections: Dispatch<any>,
-  showEdit: boolean,
-  setShowEdit: Dispatch<SetStateAction<boolean>>,
-  setCourse: Dispatch<any>,
-  setShowDelete: Dispatch<SetStateAction<boolean>>,
+  showEditSection: boolean,
+  setShowEditSection: Dispatch<SetStateAction<boolean>>,
+  showEditVideo: boolean,
+  setShowEditVideo: Dispatch<SetStateAction<boolean>>,
 })
 {
-  const [section, setSection] = useState<SectionType| null>(null)
+  const [section, setSection] = useState<SectionType | null>(null);
+  const [video, setVideo] = useState<VideoType | null>(null);
   return (
   <>
     <EditSectionModal 
-      show={showEdit} 
-      onHide={()=>setShowEdit(false)}
+      show={showEditSection} 
+      onHide={()=>setShowEditSection(false)}
       section={section}
+    />
+    <VideoModal 
+      show={showEditVideo}
+      onHide={()=>setShowEditVideo(false)}
+      video={video}
     />
     <table className="table table-secondary text-center">
       <thead className="table-dark">
@@ -261,11 +316,15 @@ function SectionTable({
       </thead>
       <tbody style={{verticalAlign: "middle"}}>
       {
-        sections?.map?.((section: SectionType, indexSection: number, sectionArray: SectionType[]) => (  
+        sections?.map?.((section: SectionType) => (  
           section.videos.map(((video: VideoType, indexVideo: number, videoArray: VideoType[])=>(  
             <tr key={section.id}>
-              {indexVideo == 0 && <td rowSpan={section.videos.length}>{section.id}</td>}
-              {indexVideo == 0 && <td rowSpan={section.videos.length}>{section.title[lang] || section.title["EN"]}</td>}
+              {indexVideo == 0 && 
+                <td rowSpan={section.videos.length}>{section.id}</td>
+              }
+              {indexVideo == 0 && 
+                <td rowSpan={section.videos.length}>{section.title?.[lang] || section.title["EN"]}</td>
+              }
               <td>{video.id}</td>
               <td>{video.title?.[lang] || video.title?.["EN"]}</td>
               <td>{video.url}</td>
@@ -274,7 +333,8 @@ function SectionTable({
                 <Button 
                   variant="primary" 
                   onClick={()=> {
-                  // setShowEdit(true)
+                    setVideo(video); 
+                    setShowEditVideo(true)
                   }}
                 >
                     Edit
@@ -283,6 +343,7 @@ function SectionTable({
                 <Button 
                   variant="primary" 
                   onClick={()=>{ 
+                    setVideo(video); 
                   // setCourse(course); 
                   // setShowDelete(true);
                   }}
@@ -297,7 +358,7 @@ function SectionTable({
                   onClick={()=> {
                     setSection(section); 
                     // setSections(sections); 
-                    setShowEdit(true);
+                    setShowEditSection(true);
                   }}
                 >
                   Edit Section

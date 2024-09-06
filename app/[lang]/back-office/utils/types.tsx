@@ -1,5 +1,5 @@
 
-export type LanguageEnum = {
+export interface LanguageEnum {
     "EN": string;
     "FR": string;
     "DE": string;
