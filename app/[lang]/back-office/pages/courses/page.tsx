@@ -1,3 +1,4 @@
+import { languagesAvailable } from "../../utils/utils";
 import Add from "./components/add";
 import List from "./components/list";
 
@@ -6,7 +7,7 @@ import {CourseType} from "@/app/[lang]/back-office/utils/types";
 
 
 export default async function CategoryPage({params, searchParams}: {params: {lang: string}, searchParams: any}){
-    const langFound = ["EN", "FR", "DE"].includes(params.lang);
+    const langFound = languagesAvailable.includes(params.lang);
     let langToQuery = params.lang;
     if(!langFound){
         langToQuery = "EN";

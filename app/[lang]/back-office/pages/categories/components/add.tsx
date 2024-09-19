@@ -5,6 +5,7 @@ import $ from "jquery";
 import { useRouter } from "next/navigation";
 import { Button, Modal } from "react-bootstrap";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { languageFallback } from "../../../utils/utils";
 
 const languagesGlobal = ["EN", "FR", "DE"];
 
@@ -27,6 +28,7 @@ async function addSend(event: MouseEvent, router: AppRouterInstance, handleEditC
         description[langGlob] = tempDescription;
     }
     if (!title["EN"] || !description["EN"]) {
+        alert("EN fill is mandatory")
         return
     }
     
@@ -106,11 +108,11 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
                                 ))
                             ) :
                             (
-                                <label> {props.lang}:
+                                <label> {languageFallback}:
                                     <input
                                         type="text"
-                                        id={`add-modal-title-${props.lang}`}
-                                        name={`add-modal-title-${props.lang}`}
+                                        id={`add-modal-title-${languageFallback}`}
+                                        name={`add-modal-title-${languageFallback}`}
                                         required={true}
                                     />
                                     <br />
@@ -136,11 +138,11 @@ function InitAddModal(props: {showAdd: any, handleAddClose: any, lang: string}){
                             ))
                         ) :
                         (
-                            <label> {props.lang}:
+                            <label> {languageFallback}:
                                 <input
                                     type="text"
-                                    id={`add-modal-description-${props.lang}`}
-                                    name={`add-modal-description-${props.lang}`}
+                                    id={`add-modal-description-${languageFallback}`}
+                                    name={`add-modal-description-${languageFallback}`}
                                     required={true}
                                 />
                                 <br />
@@ -210,9 +212,9 @@ export default function Add(props: {lang: string}){
             onClick={handleAddOpen} 
             className="btn btn-primary"
         >
-            {getFromLangAddCategory(props.lang)}
+            {getFromLangAddCategory(languageFallback)}
         </Link>
-        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose} lang={props.lang} /> 
+        <InitAddModal showAdd={showAdd} handleAddClose={handleAddClose} lang={languageFallback} /> 
     </>
     );
 }
